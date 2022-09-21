@@ -54,7 +54,7 @@ function Login() {
         </label>
         <button
           disabled={ isButtonDisabled }
-          onClick={ handleClick }
+          // onClick={ handleClick }
           type="submit"
           className="login-btn"
           data-testid="common_login__button-login"
