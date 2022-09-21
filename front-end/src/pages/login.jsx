@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Login() {
   // const [login, setLogin] = useState(false);
@@ -12,19 +12,24 @@ function Login() {
     const minSize = 6;
     const isEmailValid = emailFormat.test(email);
     const isPasswordValid = password.length >= minSize;
+    console.log(email);
+    console.log(password.length);
     setButtonDisabled(!(isEmailValid && isPasswordValid));
   };
 
-  const handleInputChange = (target) => {
+  useEffect(() => {
+    verifyForm();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password]);
+
+  const handleInputChange = async (target) => {
     if (target.name === 'email') setEmail(target.value);
     if (target.name === 'password') setPassword(target.value);
-    verifyForm();
   };
 
-  // function handleRegister() {
-  // eslint-disable-next-line no-restricted-globals
-  //  history.push('/registro');
-  // }
+  // useEffect(() => {
+
+  // }, )
 
   return (
     <div className="Login">
