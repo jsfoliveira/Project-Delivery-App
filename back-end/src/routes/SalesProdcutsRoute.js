@@ -1,25 +1,26 @@
-import { Router} from 'express';
-import SalesProductsService from '../services/SalesProductService';
-import SalesProductsController from '../controllers/SalesProductsController';
+const { Router } = require('express');
+const SalesProductsService = require('../services/SalesProductService');
+const SalesProductsController = require('../controllers/SalesProductsController');
 
+const ROUTE = '/salesproduct';
 const route = Router();
 
 const service = new SalesProductsService();
 const salesProductsController = new SalesProductsController(service);
 
-route.post('/salesproduct', (req, res) =>
-salesProductsController.create(req, res));
+route.post(ROUTE, (req, res) =>
+  salesProductsController.create(req, res));
 
-route.get('/salesproduct', (req, res) =>
-salesProductsController.read(req, res));
+route.get(ROUTE, (req, res) =>
+  salesProductsController.read(req, res));
 
-route.get('/salesproduct/:id', (req, res) =>
-salesProductsController.readOne(req, res));
+route.get(`${ROUTE}/:id`, (req, res) =>
+  salesProductsController.readOne(req, res));
 
-route.put('/salesproduct/:id', (req, res) =>
-salesProductsController.update(req, res));
+route.put(`${ROUTE}/:id`, (req, res) =>
+  salesProductsController.update(req, res));
 
-route.delete('/salesproduct/:id', (req, res) =>
-salesProductsController.delete(req, res));
+route.delete(`${ROUTE}/:id`, (req, res) =>
+  salesProductsController.delete(req, res));
 
-export default route;
+module.exports = route;

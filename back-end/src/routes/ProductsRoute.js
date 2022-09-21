@@ -1,22 +1,23 @@
-import { Router } from 'express';
-import ProductsService from '../services/SalesService';
-import ProductsController from '../controllers/SalesController';
+const { Router } = require('express');
+const ProductsService = require('../services/SalesService');
+const ProductsController = require('../controllers/SalesController');
 
+const ROUTE = '/products';
 const route = Router();
 
 const service = new ProductsService();
 const productsController = new ProductsController(service);
 
-route.post('/products', (req, res) =>
-productsController .create(req, res));
+route.post(ROUTE, (req, res) =>
+  productsController.create(req, res));
 
-route.get('/products', (req, res) =>
-  salesController.read(req, res));
+route.get(ROUTE, (req, res) =>
+  productsController.read(req, res));
 
-route.put('/products/:id', (req, res) =>
-  salesController.update(req, res));
+route.put(`${ROUTE}/:id`, (req, res) =>
+  productsController.update(req, res));
 
-route.delete('/products/:id', (req, res) =>
-  carCs.ontroller.delete(req, res));
+route.delete(`${ROUTE}/:id`, (req, res) =>
+  productsController.ontroller.delete(req, res));
 
-export default route;
+module.exports = route;

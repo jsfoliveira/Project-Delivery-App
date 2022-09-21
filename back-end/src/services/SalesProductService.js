@@ -1,28 +1,30 @@
-const { SalesProducts } = require('../database/models');
+// const { SalesProducts } = require('../database/models');
 
-export default class SalesProducts {
+class SalesProductsService {
   async create(obj) {
-    const result = await SalesProducts.create(obj);
+    const result = await this.SalesProducts.create(obj);
     return result;
   }
 
   async readAll() {
-    const result = await SalesProducts.findAll();
+    const result = await this.SalesProducts.findAll();
     return result;
   }
 
   async readOne(id) {
-    const result = await SalesProducts.findByPk(id);
+    const result = await this.SalesProducts.findByPk(id);
     return result;
   }
 
   async update(id, obj) {
-    const result = await SalesProducts.update(id, obj);
+    const result = await this.SalesProducts.update(id, obj);
     return result;
   }
 
   async delete(id) {
-    const result = await SalesProducts.delete(id);
+    const result = await this.SalesProducts.delete(id);
     return result;
   }
 }
+
+module.exports = SalesProductsService;

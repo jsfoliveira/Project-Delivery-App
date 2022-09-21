@@ -1,4 +1,4 @@
-const { Users } = require('../database/models');
+// const { Users } = require('../database/models');
 
 class UserService {
   // async create(obj) {
@@ -7,7 +7,7 @@ class UserService {
   // }
 
   async readAll() {
-    const result = await Users.findAll();
+    const result = await this.user.findAll();
     return result;
   }
 

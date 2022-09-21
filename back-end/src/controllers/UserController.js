@@ -1,29 +1,34 @@
 class UserController {
   constructor(service) {
     this.service = service;
+    // this.create = this.create.bind(this);
+    // this.readOne = this.readOne.bind(this);
+    // this.update = this.update.bind(this);
+    // this.delete = this.delete.bind(this);
+    this.readAll = this.readAll.bind(this);
   }
 
-  // create = async (req, res) => {
+  // async create(req, res) {
   //   const result = await this.service.create(req.body);
   //   res.status(201).json(result);
   // }
 
-  readAll = async (_req, res) => {
+  async readAll(_req, res) {
     const result = await this.service.readAll();
     res.status(200).json(result);
   }
 
-  // readOne = async (req, res) => {
+  // async readOne(req, res) {
   //   const result = await this.service.readOne(req.params.id);
   //   res.status(200).json(result);
   // }
 
-  // update = async (req, res) => {
-  //   const result = await this.service.update(req.params.id, red.body);
+  // async update(req, res) {
+  //   const result = await this.service.update(req.params.id, req.body);
   //   res.status(200).json(result);
   // }
 
-  // delete = async (req, res) => {
+  // async delete(req, res) {
   //   const result = await this.service.delete(req.params.id);
   //   res.status(200).json(result);
   // }
