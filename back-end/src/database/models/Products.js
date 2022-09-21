@@ -1,8 +1,8 @@
-import { DataTypes } from 'sequelize';
+const { DataTypes } = require('sequelize');
 const { INTEGER, STRING, DECIMAL } = DataTypes;
 
 const CreateProduct = (sequelize) => {
-  const Product = sequelize.define('Product', {
+  const Product = sequelize.define('Products', {
     id: {
       type: INTEGER,
       primaryKey: true,
