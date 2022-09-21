@@ -1,28 +1,30 @@
 const { Users } = require('../database/models');
 
-export default class UserService {
-  async create(obj) {
-    const result = await Users.create(obj);
-    return result;
-  }
+class UserService {
+  // async create(obj) {
+  //   const result = await Users.create(obj);
+  //   return result;
+  // }
 
   async readAll() {
     const result = await Users.findAll();
     return result;
   }
 
-  async readOne(id) {
-    const result = await Users.findByPk(id);
-    return result;
-  }
+  // async readOne(id) {
+  //   const result = await Users.findByPk(id);
+  //   return result;
+  // }
 
-  async update(id, obj) {
-    const result = await Users.update(id, obj);
-    return result;
-  }
+  // async update(id, obj) {
+  //   const result = await Users.update(id, obj);
+  //   return result;
+  // }
 
-  async delete(id) {
-    const result = await Users.delete(id);
-    return result;
-  }
+  // async delete(id) {
+  //   const result = await Users.delete(id);
+  //   return result;
+  // }
 }
+
+module.exports = UserService;
