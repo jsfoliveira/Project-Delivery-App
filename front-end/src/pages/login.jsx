@@ -22,10 +22,10 @@ function Login() {
     verifyForm();
   };
 
-  function handleRegister() {
-    // eslint-disable-next-line no-restricted-globals
-    history.push('/registro');
-  }
+  // function handleRegister() {
+  // eslint-disable-next-line no-restricted-globals
+  //  history.push('/registro');
+  // }
 
   return (
     <div className="Login">
@@ -65,7 +65,7 @@ function Login() {
         <button
           className="registre-se"
           data-testid="common_login__button-register"
-          onClick={ () => handleRegister() }
+          // onClick={ () => handleRegister() }
           type="submit"
         >
           Cadastra-se
