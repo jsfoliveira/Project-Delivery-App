@@ -1,13 +1,16 @@
-// const { Users } = require('../database/models');
+const { Users } = require('../database/models');
 
 class UserService {
   // async create(obj) {
   //   const result = await Users.create(obj);
   //   return result;
   // }
+  constructor() {
+    this.users = Users;
+  }
 
   async readAll() {
-    const result = await this.user.findAll();
+    const result = await this.users.findAll();
     return result;
   }
 
