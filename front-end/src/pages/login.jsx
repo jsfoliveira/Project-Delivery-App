@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 function Login() {
@@ -65,7 +64,6 @@ function Login() {
         <button
           className="registre-se"
           data-testid="common_login__button-register"
-          // onClick={ () => handleRegister() }
           type="submit"
         >
           Cadastra-se
@@ -74,11 +72,5 @@ function Login() {
     </div>
   );
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
 
 export default Login;
