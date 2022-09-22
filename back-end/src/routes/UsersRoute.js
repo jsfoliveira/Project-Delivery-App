@@ -7,10 +7,9 @@ const route = Router();
 const service = new UserService();
 const userController = new UserController(service);
 
-// // route.post('/login', (req, res) =>
-// //   userController.create(req, res));
+route.post('/users', userController.create);
 
-route.get('/user', userController.readAll);
+route.get('/users', userController.readAll);
 
 // // loginroute.get('/cars/:id', (req, res) =>
 // //   userController.readOne(req, res));
