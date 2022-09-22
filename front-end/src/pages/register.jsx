@@ -12,7 +12,7 @@ function Register() {
     const minName = 12;
     const isEmailValid = emailFormat.test(email);
     const isPasswordValid = password.length >= minSize;
-    const isNameValid = name.length < minName;
+    const isNameValid = name.length >= minName;
     setButtonDisabled(!(isEmailValid && isPasswordValid && isNameValid));
   };
   useEffect(() => {
@@ -37,7 +37,7 @@ function Register() {
             type="text"
             onChange={ ({ target }) => handleInputChange(target) }
             data-testid="common_register__input-name"
-            name="nome"
+            name="name"
             placeholder="Seu nome"
           />
         </label>
@@ -65,7 +65,7 @@ function Register() {
           disabled={ isButtonDisabled }
           type="submit"
           className="login-btn"
-          data-testid="common_login__button-login"
+          data-testid="common_register__button-register"
         >
           Cadastrar
         </button>
