@@ -1,12 +1,16 @@
+const md5 = require('md5');
 const { Users } = require('../database/models');
 
 class UserService {
-  // async create(obj) {
-  //   const result = await Users.create(obj);
-  //   return result;
-  // }
   constructor() {
     this.users = Users;
+  }
+  
+  async create(obj) {
+    const { name, email, password } = obj;
+    const passwordHash = md5(password);
+    const result = await this.users.create({ name, email, password: passwordHash });
+    return result;
   }
 
   async readAll() {
