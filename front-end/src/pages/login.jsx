@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
-  // const [login, setLogin] = useState(false);
-
   const [email, setEmail] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const verifyForm = () => {
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
@@ -27,9 +27,9 @@ function Login() {
     if (target.name === 'password') setPassword(target.value);
   };
 
-  // useEffect(() => {
-
-  // }, )
+  function navigateTo(path) {
+    navigate(path);
+  }
 
   return (
     <div className="Login">
@@ -69,6 +69,7 @@ function Login() {
         <button
           className="registre-se"
           data-testid="common_login__button-register"
+          onClick={ () => navigateTo('/register') }
           type="submit"
         >
           Cadastra-se
