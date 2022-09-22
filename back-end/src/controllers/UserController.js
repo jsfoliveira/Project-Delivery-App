@@ -1,5 +1,3 @@
-const md5 = require('md5');
-
 class UserController {
   constructor(service) {
     this.service = service;
@@ -17,7 +15,6 @@ class UserController {
 
   async readAll(_req, res) {
     const result = await this.service.readAll();
-    console.log(md5('--adm2@21!!--'));
     res.status(200).json(result);
   }
 

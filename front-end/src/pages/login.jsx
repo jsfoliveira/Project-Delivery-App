@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import fetchLogin from '../api/fetchLogin';
 
 function Login() {
   // const [login, setLogin] = useState(false);
@@ -12,8 +13,6 @@ function Login() {
     const minSize = 6;
     const isEmailValid = emailFormat.test(email);
     const isPasswordValid = password.length >= minSize;
-    console.log(email);
-    console.log(password.length);
     setButtonDisabled(!(isEmailValid && isPasswordValid));
   };
 
@@ -27,9 +26,11 @@ function Login() {
     if (target.name === 'password') setPassword(target.value);
   };
 
-  // useEffect(() => {
-
-  // }, )
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const result = await fetchLogin({ email, password });
+    console.log(result);
+  };
 
   return (
     <div className="Login">
@@ -59,7 +60,7 @@ function Login() {
         </label>
         <button
           disabled={ isButtonDisabled }
-          // onClick={ handleClick }
+          onClick={ (e) => handleClick(e) }
           type="submit"
           className="login-btn"
           data-testid="common_login__button-login"
