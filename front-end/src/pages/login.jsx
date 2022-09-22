@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import fetchLogin from '../api/fetchLogin';
 
 function Login() {
-  // const [login, setLogin] = useState(false);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
@@ -34,9 +35,10 @@ function Login() {
     const STATUS_NUMBER = 404;
     if (result.status === STATUS_NUMBER) {
       setInvalidLogin(true);
-      setMessageError(result.data.message);
+      return setMessageError(result.data.message);
     }
-    console.log(result);
+    setInvalidLogin(false);
+    navigate('/customer/products');
     // redirecionar para a tela /customer/products
   };
 
