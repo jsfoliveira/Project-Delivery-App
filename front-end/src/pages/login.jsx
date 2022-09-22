@@ -7,6 +7,8 @@ function Login() {
   const [email, setEmail] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [password, setPassword] = useState('');
+  const [invalidLogin, setInvalidLogin] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   const verifyForm = () => {
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
@@ -29,7 +31,13 @@ function Login() {
   const handleClick = async (e) => {
     e.preventDefault();
     const result = await fetchLogin({ email, password });
+    const STATUS_NUMBER = 404;
+    if (result.status === STATUS_NUMBER) {
+      setInvalidLogin(true);
+      setMessageError(result.data.message);
+    }
     console.log(result);
+    // redirecionar para a tela /customer/products
   };
 
   return (
@@ -75,6 +83,10 @@ function Login() {
           Cadastra-se
         </button>
       </form>
+      { invalidLogin
+        && (
+          <span data-testid="common_login__element-invalid-email">{messageError}</span>
+        )}
     </div>
   );
 }

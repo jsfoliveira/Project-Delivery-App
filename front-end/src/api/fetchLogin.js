@@ -8,7 +8,7 @@ async function fetchLogin(obj) {
     const result = await intance.post('/login', obj);
     return result;
   } catch (error) {
-    console.log(error);
+    return error.response;
   }
 }
 
