@@ -42,6 +42,10 @@ function Login() {
     // redirecionar para a tela /customer/products
   };
 
+  function navigateTo(path) {
+    navigate(path);
+  }
+
   return (
     <div className="Login">
       <form className="login-form">
@@ -80,6 +84,7 @@ function Login() {
         <button
           className="registre-se"
           data-testid="common_login__button-register"
+          onClick={ () => navigateTo('/register') }
           type="submit"
         >
           Cadastra-se
