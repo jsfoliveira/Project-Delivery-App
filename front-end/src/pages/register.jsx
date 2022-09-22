@@ -33,12 +33,12 @@ function Register() {
   };
   const handleClick = async (e) => {
     e.preventDefault();
-    const result = fetchCreateUser({ name, email, password });
+    const result = await fetchCreateUser({ name, email, password });
     const STATUS_NUMBER = 409;
     console.log(result);
     if (result.status === STATUS_NUMBER) {
       setExistingUser(true);
-      setMessageError(result.data.message);
+      return setMessageError(result.data.message);
     }
     setExistingUser(false);
     navigate('/customer/products');

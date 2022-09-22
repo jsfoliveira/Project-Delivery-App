@@ -9,8 +9,16 @@ class UserService {
   async create(obj) {
     const { name, email, password } = obj;
     const passwordHash = md5(password);
-    const result = await this.users.create({ name, email, password: passwordHash });
-    return result;
+    try {
+      const result = await this.users.create(
+        { name, email, password: passwordHash, role: 'customer' },
+        );
+      return result;
+    } catch (error) {
+      const err = new Error('Existing user!');
+      err.name = 'ConflictError';
+      throw err;
+    }
   }
 
   async readAll() {
