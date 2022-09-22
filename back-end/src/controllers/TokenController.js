@@ -1,15 +1,9 @@
 const jwt = require('../services/utils/jwt');
 
-class TokenController {  
-  constructor() {
-    this.token = this.token.bind(this);
-  }
+const TokenController = (req, res) => {  
+  const token = req.headers.authorization;
+  const decoded = jwt.verify(token);
+  res.status(200).json(decoded);
+};
 
-    async token(req, res) {
-        const token = req.headers.authorization;
-        const decoded = jwt.verify(token);
-        res.status(200).json(decoded);
-      }
-  }
-  
 module.exports = TokenController;

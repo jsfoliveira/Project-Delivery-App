@@ -6,7 +6,5 @@ module.exports = {
     return jwt.sign(publicInfo, 'secret_key');
   },
 
-  verify: (token) => {
-    return jwt.verify(token, 'secret_key');
-  }
+  verify: (token) => jwt.verify(token, 'secret_key'),
 };
