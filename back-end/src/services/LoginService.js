@@ -10,10 +10,13 @@ class LoginService {
   async login(obj) {
     const { email, password } = obj;
     const passwordHash = md5(password);
-    const result = await this.user.findOne({ where: { email, password: passwordHash } });
+    const result = await this.user.findOne({ 
+      where: { email, password: passwordHash },
+      raw: true,
+    });
     if (!result) {
       const err = new Error('Email not found or Password not found!');
-      err.name = 'notFound';
+      err.name = 'NotFoundError';
       throw err;
     }
     const token = jwt.sign(result);
