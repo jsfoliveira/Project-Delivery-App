@@ -19,7 +19,9 @@ class UserController {
   }
 
   // async readOne(req, res) {
-  //   const result = await this.service.readOne(req.params.id);
+  //   const token = req.headers.authorization;
+  //   const decoded = jwt.verify(token);
+  //   const result = await this.service.readOne(decoded.email);
   //   res.status(200).json(result);
   // }
 
