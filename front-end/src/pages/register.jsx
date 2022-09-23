@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import fetchCreateUser from '../api/fetchCreateUser';
 
 function Register() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [existingUser, setExistingUser] = useState(false);
+  const [messageError, setMessageError] = useState('');
 
   const verifyForm = () => {
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
@@ -25,7 +31,18 @@ function Register() {
     if (target.name === 'email') setEmail(target.value);
     if (target.name === 'password') setPassword(target.value);
   };
-
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const result = await fetchCreateUser({ name, email, password });
+    const STATUS_NUMBER = 409;
+    console.log(result);
+    if (result.status === STATUS_NUMBER) {
+      setExistingUser(true);
+      return setMessageError(result.data.message);
+    }
+    setExistingUser(false);
+    navigate('/customer/products');
+  };
   return (
     <div className="Login">
       <form className="login-form">
@@ -65,11 +82,18 @@ function Register() {
           disabled={ isButtonDisabled }
           type="submit"
           className="login-btn"
+          onClick={ (e) => handleClick(e) }
           data-testid="common_register__button-register"
         >
           Cadastrar
         </button>
       </form>
+      { existingUser
+        && (
+          <span data-testid="common_register__element-invalid_register">
+            {messageError}
+          </span>
+        )}
     </div>
   );
 }
