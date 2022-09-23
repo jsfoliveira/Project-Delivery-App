@@ -1,6 +1,8 @@
-export default class ProductService {
-  constructor(product) {
-    this.product = product;
+const { Products } = require('../database/models');
+
+class ProductService {
+  constructor() {
+    this.product = Products;
     this.create = this.create.bind(this);
     this.readAll = this.readAll.bind(this);
     this.readOne = this.readOne.bind(this);
@@ -33,3 +35,5 @@ export default class ProductService {
     return result;
   }
 }
+
+module.exports = ProductService;

@@ -1,6 +1,4 @@
-// const { Sales } = require('../database/models');
-
-export default class SalesService {
+class SalesService {
   async create(obj) {
     const result = await this.Sales.create(obj);
     return result;
@@ -26,3 +24,5 @@ export default class SalesService {
     return result;
   }
 }
+
+module.exports = SalesService;

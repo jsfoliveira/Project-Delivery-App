@@ -36,6 +36,9 @@
     "stylelint-config-standard": "25.0.0",
     "stylelint-order": "5.0.0"
   },
+  "browser": {
+    "crypto": false
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

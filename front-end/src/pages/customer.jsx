@@ -1,8 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
+import CardProduct from '../components/CardProduct';
 
 function Customer() {
   return (
-    <h1>Customer</h1>
+    <>
+      <Header />
+      <CardProduct />
+    </>
   );
 }
 

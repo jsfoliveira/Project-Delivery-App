@@ -39,7 +39,7 @@ function Login() {
     }
     setInvalidLogin(false);
     navigate('/customer/products');
-    // redirecionar para a tela /customer/products
+    localStorage.setItem('token', JSON.stringify(result.data));
   };
 
   function navigateTo(path) {
