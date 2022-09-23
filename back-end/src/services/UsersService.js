@@ -1,12 +1,24 @@
+const md5 = require('md5');
 const { Users } = require('../database/models');
 
 class UserService {
-  // async create(obj) {
-  //   const result = await Users.create(obj);
-  //   return result;
-  // }
   constructor() {
     this.users = Users;
+  }
+  
+  async create(obj) {
+    const { name, email, password } = obj;
+    const passwordHash = md5(password);
+    try {
+      const result = await this.users.create(
+        { name, email, password: passwordHash, role: 'customer' },
+        );
+      return result;
+    } catch (error) {
+      const err = new Error('Existing user!');
+      err.name = 'ConflictError';
+      throw err;
+    }
   }
 
   async readAll() {
