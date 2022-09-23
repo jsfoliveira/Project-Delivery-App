@@ -6,8 +6,8 @@ class LoginController {
 
   async login(req, res) {
     const userData = req.body;
-    const token = await this.service.login(userData);
-    return res.status(200).json({ token });
+    const result = await this.service.login(userData);
+    return res.status(200).json(result);
   }
 }
 

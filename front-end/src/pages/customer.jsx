@@ -1,12 +1,12 @@
 import React from 'react';
+import CardList from '../components/CardList';
 import Header from '../components/Header';
-import CardProduct from '../components/CardProduct';
 
 function Customer() {
   return (
     <>
       <Header />
-      <CardProduct />
+      <CardList />
     </>
   );
 }

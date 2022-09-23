@@ -20,7 +20,8 @@ class LoginService {
       throw err;
     }
     const token = jwt.sign(result);
-    return token;
+    const { name, role } = result;
+    return ({ token, name, email, role });
   }
 }
 

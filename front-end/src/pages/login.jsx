@@ -39,7 +39,7 @@ function Login() {
     }
     setInvalidLogin(false);
     navigate('/customer/products');
-    localStorage.setItem('token', JSON.stringify(result.data));
+    localStorage.setItem('appDelivery', JSON.stringify(result.data));
   };
 
   function navigateTo(path) {

@@ -1,5 +1,6 @@
 const md5 = require('md5');
 const { Users } = require('../database/models');
+const jwt = require('./utils/jwt');
 
 class UserService {
   constructor() {
@@ -13,7 +14,11 @@ class UserService {
       const result = await this.users.create(
         { name, email, password: passwordHash, role: 'customer' },
         );
-      return result;
+      const dataValues = result.toJSON();
+      const token = jwt.sign(dataValues);
+      console.log(dataValues);
+      const { role } = dataValues;
+      return ({ token, name, email, role });
     } catch (error) {
       const err = new Error('Existing user!');
       err.name = 'ConflictError';

@@ -42,6 +42,7 @@ function Register() {
     }
     setExistingUser(false);
     navigate('/customer/products');
+    localStorage.setItem('appDelivery', JSON.stringify(result.data));
   };
   return (
     <div className="Login">
