@@ -4,6 +4,14 @@ import React, { useState } from 'react';
 function Card({ product }) {
   const { name, urlImage, price, id } = product;
   const [counter, setCounter] = useState(0);
+  // const [cart, setCart] = useState({});
+
+  // // useEffect (() => {
+  // //   const product = {
+  // //  idame, priccountertal
+  // //
+  //   setCart(product);
+  // })
 
   function increment() {
     setCounter(counter + 1);
@@ -31,6 +39,7 @@ function Card({ product }) {
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ urlImage }
         alt={ name }
+        width="50px"
       />
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
@@ -65,7 +74,7 @@ Card.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
     urlImage: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     id: PropTypes.number,
   }).isRequired,
 };

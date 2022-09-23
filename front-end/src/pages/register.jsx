@@ -41,8 +41,8 @@ function Register() {
       return setMessageError(result.data.message);
     }
     setExistingUser(false);
-    navigate('/customer/products');
     localStorage.setItem('appDelivery', JSON.stringify(result.data));
+    navigate('/customer/products');
   };
   return (
     <div className="Login">
