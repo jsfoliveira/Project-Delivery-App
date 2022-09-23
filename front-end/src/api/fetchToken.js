@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-async function fetchProduct(token) {
+async function fetchToken(token) {
   const instance = axios.create({
     baseURL: 'http://localhost:3001',
   });
@@ -14,7 +14,7 @@ async function fetchProduct(token) {
   }
 }
 
-export default fetchProduct;
+export default fetchToken;
 
 // {
 //   "id": 3,

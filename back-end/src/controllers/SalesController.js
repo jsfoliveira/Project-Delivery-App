@@ -13,8 +13,8 @@ class SalesController {
     res.status(201).json(result);
   }
 
-  async read(_req, res) {
-    const result = await this.service.read();
+  async readAll(_req, res) {
+    const result = await this.service.readAll();
     res.status(200).json(result);
   }
 

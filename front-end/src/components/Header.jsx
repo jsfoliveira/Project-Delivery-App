@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import fetchProduct from '../api/fetchProduct';
+import fetchToken from '../api/fetchToken';
 
 function Header() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const decode = async (key) => {
-      const userInfo = await fetchProduct(key);
+      const userInfo = await fetchToken(key);
       setUser(userInfo.data);
     };
     const token = JSON.parse(localStorage.getItem('token'));

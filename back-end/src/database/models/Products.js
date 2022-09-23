@@ -10,10 +10,15 @@ const CreateProduct = (sequelize) => {
     },
     name: STRING,
     price: DECIMAL,
-    urlImage: STRING,
+    urlImage: {
+      type: STRING(200),
+      allowNull: false,
+      field: 'url_image',
+    },
   }, {
     timestamps: false,
     tableName: 'products',
+    underscore: true,
   });
   return Product;
 }
