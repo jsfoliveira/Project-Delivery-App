@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import fetchLogin from '../api/fetchLogin';
+import { saveLocal } from '../helpers/localStorage';
 
 function Login() {
   const navigate = useNavigate();
@@ -29,22 +30,39 @@ function Login() {
     if (target.name === 'password') setPassword(target.value);
   };
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    const result = await fetchLogin({ email, password });
-    const STATUS_NUMBER = 404;
-    if (result.status === STATUS_NUMBER) {
-      setInvalidLogin(true);
-      return setMessageError(result.data.message);
-    }
-    setInvalidLogin(false);
-    localStorage.setItem('user', JSON.stringify(result.data));
-    navigate('/customer/products');
-  };
-
   function navigateTo(path) {
     navigate(path);
   }
+
+  function switchRole(role) {
+    switch (role) {
+    case 'customer':
+      navigateTo('/customer/products');
+      break;
+    case 'seller':
+      navigateTo('/seller/orders');
+      break;
+    case 'administrator':
+      navigateTo('/admin/manage');
+      break;
+    default:
+      navigateTo('/login');
+    }
+  }
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const { data, status } = await fetchLogin({ email, password });
+    const STATUS_NUMBER = 404;
+    if (status === STATUS_NUMBER) {
+      setInvalidLogin(true);
+      return setMessageError(data.message);
+    }
+    setInvalidLogin(false);
+    saveLocal('user', data);
+    const { role } = data;
+    switchRole(role);
+  };
 
   return (
     <div className="Login">

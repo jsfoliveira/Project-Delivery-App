@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import fetchCreateUser from '../api/fetchCreateUser';
+import { saveLocal } from '../helpers/localStorage';
 
 function Register() {
   const navigate = useNavigate();
@@ -35,13 +36,12 @@ function Register() {
     e.preventDefault();
     const result = await fetchCreateUser({ name, email, password });
     const STATUS_NUMBER = 409;
-    console.log(result);
     if (result.status === STATUS_NUMBER) {
       setExistingUser(true);
       return setMessageError(result.data.message);
     }
     setExistingUser(false);
-    localStorage.setItem('user', JSON.stringify(result.data));
+    saveLocal('user', result.data);
     navigate('/customer/products');
   };
   return (
