@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import CardList from '../components/CardList';
 import TotalCart from '../components/TotalCart';
 
-function Customer() {
+function Products() {
   return (
     <>
       <Header />
@@ -13,4 +13,4 @@ function Customer() {
   );
 }
 
-export default Customer;
+export default Products;

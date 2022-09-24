@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import fetchProduct from '../api/fetchProducts';
-import stateGlobalContext from '../context/stateGlobalContext';
 import Card from './Card';
 import '../assets/cardList.css';
 
 function CardList() {
   const [productsList, setProductList] = useState([]);
-  const { purchaseTotal } = useContext(stateGlobalContext);
-  console.log('TESTE', purchaseTotal);
 
   useEffect(() => {
     const getProducts = async () => {
