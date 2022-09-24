@@ -10,8 +10,8 @@ function Header() {
       const userInfo = await fetchToken(key);
       setUser(userInfo.data);
     };
-    const token = JSON.parse(localStorage.getItem('token'));
-    decode(token.token);
+    const appDelivery = JSON.parse(localStorage.getItem('user'));
+    decode(appDelivery.token);
   }, []);
 
   return (
@@ -36,6 +36,7 @@ function Header() {
       <Link
         to="/"
         data-testid="customer_products__element-navbar-link-logout"
+        onClick={ () => localStorage.clear() }
       >
         Sair
       </Link>

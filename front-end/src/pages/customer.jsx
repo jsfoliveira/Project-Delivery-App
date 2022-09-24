@@ -1,12 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
-import CardProduct from '../components/CardProduct';
+import CardList from '../components/CardList';
+import TotalCart from '../components/TotalCart';
 
 function Customer() {
   return (
     <>
       <Header />
-      <CardProduct />
+      <CardList />
+      <TotalCart />
     </>
   );
 }

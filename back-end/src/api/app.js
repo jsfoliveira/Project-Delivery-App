@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 // https://www.youtube.com/watch?v=bk661C4WY6I
 // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
 const cors = require('cors');
@@ -21,6 +22,8 @@ app.use(tokenRoute);
 app.use(userRoute);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
+
+app.use('/images', express.static(path.join(__dirname, '/images')));
 
 app.use(errorHandler);
 

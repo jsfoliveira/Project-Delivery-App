@@ -38,8 +38,8 @@ function Login() {
       return setMessageError(result.data.message);
     }
     setInvalidLogin(false);
+    localStorage.setItem('user', JSON.stringify(result.data));
     navigate('/customer/products');
-    localStorage.setItem('token', JSON.stringify(result.data));
   };
 
   function navigateTo(path) {
