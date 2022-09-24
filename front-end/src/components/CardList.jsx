@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import fetchProduct from '../api/fetchProducts';
 import stateGlobalContext from '../context/stateGlobalContext';
 import Card from './Card';
+import '../assets/cardList.css';
 
 function CardList() {
   const [productsList, setProductList] = useState([]);
@@ -19,13 +20,15 @@ function CardList() {
   return (
     <>
       <h1>Cards</h1>
-      {
-        productsList.map((prod, index) => (
-          <div key={ index }>
-            <Card product={ prod } />
-          </div>
-        ))
-      }
+      <div className="card-list">
+        {
+          productsList.map((prod, index) => (
+            <div key={ index }>
+              <Card product={ prod } />
+            </div>
+          ))
+        }
+      </div>
     </>
   );
 }

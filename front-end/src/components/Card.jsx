@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import stateGlobalContext from '../context/stateGlobalContext';
 
 function Card({ product }) {
   const { name, urlImage, price, id } = product;
+  const { addAndRemovePurchaseTotal } = useContext(stateGlobalContext);
   const [counter, setCounter] = useState(0);
-  // const [cart, setCart] = useState({});
 
-  // // useEffect (() => {
-  // //   const product = {
-  // //  idame, priccountertal
-  // //
-  //   setCart(product);
-  // })
+  useEffect(() => {
+    addAndRemovePurchaseTotal({ id, counter, price });
+    console.log(counter);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counter]);
 
   function increment() {
     setCounter(counter + 1);
@@ -23,13 +23,13 @@ function Card({ product }) {
   }
 
   function handleChange(event) {
-    if (Number(event.target.value)) {
+    if (Number(event.target.value) >= 0) {
       setCounter(Number(event.target.value));
     }
   }
 
   return (
-    <>
+    <div className="card-product">
       <p
         data-testid={ `customer_products__element-card-title-${id}` }
       >
@@ -57,6 +57,7 @@ function Card({ product }) {
         data-testid={ `customer_products__input-card-quantity-${id}` }
         type="number"
         onChange={ handleChange }
+        min={ 0 }
         value={ Number(counter) }
       />
       <button
@@ -66,7 +67,7 @@ function Card({ product }) {
       >
         -
       </button>
-    </>
+    </div>
   );
 }
 

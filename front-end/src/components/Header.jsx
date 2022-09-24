@@ -10,7 +10,7 @@ function Header() {
       const userInfo = await fetchToken(key);
       setUser(userInfo.data);
     };
-    const appDelivery = JSON.parse(localStorage.getItem('appDelivery'));
+    const appDelivery = JSON.parse(localStorage.getItem('user'));
     decode(appDelivery.token);
   }, []);
 

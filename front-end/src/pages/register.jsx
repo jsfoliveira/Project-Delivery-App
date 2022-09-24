@@ -41,7 +41,7 @@ function Register() {
       return setMessageError(result.data.message);
     }
     setExistingUser(false);
-    localStorage.setItem('appDelivery', JSON.stringify(result.data));
+    localStorage.setItem('user', JSON.stringify(result.data));
     navigate('/customer/products');
   };
   return (
