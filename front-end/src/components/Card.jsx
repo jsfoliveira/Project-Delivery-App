@@ -8,7 +8,7 @@ function Card({ product }) {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    addAndRemovePurchaseTotal({ id, counter, price });
+    addAndRemovePurchaseTotal({ ...product, counter });
     console.log(counter);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter]);
