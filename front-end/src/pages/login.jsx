@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import fetchLogin from '../api/fetchLogin';
+import { saveLocal } from '../helpers/localStorage';
 
 function Login() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ function Login() {
       return setMessageError(data.message);
     }
     setInvalidLogin(false);
-    localStorage.setItem('user', JSON.stringify(data));
+    saveLocal('user', data);
     const { role } = data;
     switchRole(role);
   };

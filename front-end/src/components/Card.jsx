@@ -9,7 +9,6 @@ function Card({ product }) {
 
   useEffect(() => {
     addAndRemovePurchaseTotal({ id, counter, price });
-    console.log(counter);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter]);
 
