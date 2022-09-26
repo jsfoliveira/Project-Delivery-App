@@ -1,5 +1,8 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { fetchCardOrder } from '../api/fetchCardOrder';
+import { readLocal } from '../helpers/localStorage';
 
 function CardOrder() {
   // eslint-disable-next-line no-unused-vars
@@ -71,6 +74,12 @@ function CardOrder() {
       </div>
     );
   };
+
+  useEffect(async ()=> {
+    const token = readLocal('user');
+    const response = await fetchCardOrder(token.token, userId);
+    setOrders(response);
+  })
 
   const renderCardOrders = () => {
     if (orders.length !== 0 || orders !== undefined) {
