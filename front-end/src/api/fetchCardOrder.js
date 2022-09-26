@@ -6,7 +6,7 @@ async function fetchCardOrder(token, userId) {
     headers: { Authorization: token, user: userId },
   });
   try {
-    const result = await instance.get('/customerorder');
+    const result = await instance.get('/sales');
     return result;
   } catch (error) {
     return error.response;
