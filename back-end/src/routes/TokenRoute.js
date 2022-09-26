@@ -3,6 +3,6 @@ const TokenController = require('../controllers/TokenController');
 
 const route = Router();
 
-route.get('/token', TokenController);
+route.get('/', TokenController);
 
 module.exports = route;
