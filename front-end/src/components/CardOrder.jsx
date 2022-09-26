@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function CardOrder() {
+  // eslint-disable-next-line no-unused-vars
   const [orders, setOrders] = useState([]);
 
   // adcionar zero à esquerda do número do pedido
