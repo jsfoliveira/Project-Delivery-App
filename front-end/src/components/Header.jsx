@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import fetchToken from '../api/fetchToken';
+import { clearLocal, readLocal } from '../helpers/localStorage';
 
 function Header() {
   const [user, setUser] = useState({});
@@ -10,7 +11,7 @@ function Header() {
       const userInfo = await fetchToken(key);
       setUser(userInfo.data);
     };
-    const appDelivery = JSON.parse(localStorage.getItem('user'));
+    const appDelivery = readLocal('user');
     decode(appDelivery.token);
   }, []);
 
@@ -36,7 +37,7 @@ function Header() {
       <Link
         to="/"
         data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => localStorage.clear() }
+        onClick={ () => clearLocal() }
       >
         Sair
       </Link>
