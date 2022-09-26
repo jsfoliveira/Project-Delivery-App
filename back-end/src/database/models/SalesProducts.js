@@ -3,14 +3,35 @@ const { INTEGER } = DataTypes;
 
 const CreateSalesProducts = (sequelize) => {
   const SalesProduct = sequelize.define('SalesProducts', {
-    saleId: INTEGER,
-    productId: INTEGER,
+    saleId: {
+      type: INTEGER,
+      allowNull: false,
+      field: 'sale_id',
+      references: {
+        model: 'sales',
+        key: 'id',
+      },
+      primaryKey: true,
+      onDelete: 'cascade',
+    },
+    productId: {
+      type: INTEGER,
+      allowNull: false,
+      field: 'product_id',
+      references: {
+        model: 'products',
+        key: 'id',
+      },
+      primaryKey: true,
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    },
     quantity: INTEGER,
   },
   {
     timestamps: false,
     underscored: true,
-    tableName:'SalesProducts',
+    tableName:'sales_products',
   });
   SalesProduct.associate = (models) => {
     models.Sales.belongsToMany(models.Products, {
