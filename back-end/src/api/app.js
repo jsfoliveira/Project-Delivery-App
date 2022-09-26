@@ -9,6 +9,7 @@ const userRoute = require('../routes/UsersRoute');
 const loginRoute = require('../routes/LoginRoute');
 const tokenRoute = require('../routes/TokenRoute');
 const productsRoute = require('../routes/ProductsRoute');
+const salesRoute = require('../routes/SalesRoute');
 const errorHandler = require('../middlewares/errorHandler');
 
 const app = express();
@@ -16,9 +17,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(loginRoute);
-app.use(productsRoute);
-app.use(tokenRoute);
+app.use('/login', loginRoute);
+app.use('/products', productsRoute);
+app.use('/token', tokenRoute);
+app.use('/sales', salesRoute);
 app.use(userRoute);
 
 app.get('/coffee', (_req, res) => res.status(418).end());

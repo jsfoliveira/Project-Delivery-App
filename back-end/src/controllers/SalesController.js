@@ -1,3 +1,5 @@
+const jwt = require('../services/utils/jwt');
+
 class SalesController {
   constructor(service) {
     this.service = service;
@@ -13,12 +15,16 @@ class SalesController {
     res.status(201).json(result);
   }
 
-  async readAll(_req, res) {
+  async readAll(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
     const result = await this.service.readAll();
     res.status(200).json(result);
   }
 
   async readOne(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
     const result = await this.service.readOne(req.params.id);
     res.status(200).json(result);
   }

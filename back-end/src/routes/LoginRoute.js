@@ -7,7 +7,7 @@ const route = Router();
 const service = new LoginService();
 const loginController = new LoginController(service);
 
-route.post('/login', loginController.login);
+route.post('/', loginController.login);
 
 // route.get('/login', loginController.readAll);
 
