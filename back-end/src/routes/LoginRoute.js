@@ -9,6 +9,4 @@ const loginController = new LoginController(service);
 
 route.post('/', loginController.login);
 
-// route.get('/login', loginController.readAll);
-
 module.exports = route;

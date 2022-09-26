@@ -63,13 +63,18 @@ class SalesService {
   }
 
   async update(id, obj) {
-    const result = await this.sales.update(id, obj);
+    const result = await this.sales.update(
+      obj,
+      { where: { id } },
+    );
     return result;
   }
 
   async delete(id) {
-    const result = await this.Sales.delete(id);
-    return result;
+    console.log(id);
+    await this.sales.destroy({
+      where: { id },
+    });
   }
 }
 
