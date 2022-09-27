@@ -1,19 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import fetchSales from '../api/fetchSales';
 import Header from '../components/Header';
 
 import stateGlobalContext from '../context/stateGlobalContext';
+import { readLocal } from '../helpers/localStorage';
 
 function Checkout() {
   const { sumTotal, purchaseTotal, setPurchaseTotal } = useContext(stateGlobalContext);
+  const [addressCheckout, setAddressCheckout] = useState('');
+  const [numberAddressCheckout, setNumberAddressCheckout] = useState('');
   const navigate = useNavigate();
 
   const removeItem = (id) => {
     const item = purchaseTotal.filter((product) => +product.id !== +id);
     setPurchaseTotal(item);
   };
+
+  const handleInputChange = async (target) => {
+    if (target.name === 'addressCheckout') setAddressCheckout(target.value);
+    if (target.name === 'numberAddressCheckout') setNumberAddressCheckout(target.value);
+  };
+
   function navigateTo(path) {
     navigate(path);
+  }
+  async function handleClick() {
+    const sales = {
+      sellerId: 2,
+      totalPrice: sumTotal,
+      deliveryAdress: addressCheckout,
+      deliveryNumber: numberAddressCheckout,
+    };
+    const products = purchaseTotal
+      .map((element) => ({ productId: element.id, quantity: element.counter }));
+    console.log(products);
+    const token = readLocal('user');
+    console.log(token.token);
+    const { data } = await fetchSales(token.token, { sales, products });
+    navigateTo(`/customer/orders/${data.userId}`);
   }
 
   return (
@@ -89,8 +114,10 @@ function Checkout() {
           <br />
           <input
             id="addressCheckout"
+            name="addressCheckout"
             data-testid="customer_checkout__input-address"
             type="text"
+            onChange={ ({ target }) => handleInputChange(target) }
           />
         </label>
         <br />
@@ -99,6 +126,7 @@ function Checkout() {
           <br />
           <input
             id="numberAddressCheckout"
+            name="numberAddressCheckout"
             data-testid="customer_checkout__input-address-number"
             type="number"
           />
@@ -107,7 +135,7 @@ function Checkout() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="submit"
-          onClick={ () => navigateTo('/customer/orders/:id') }
+          onClick={ handleClick }
         >
           FINALIZAR PEDIDO
         </button>

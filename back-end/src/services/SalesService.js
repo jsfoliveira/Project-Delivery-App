@@ -37,14 +37,14 @@ class SalesService {
     const t = await sequelize.transaction();
     try {
       const { products, sales } = obj;
-      sales.iserId = (await this.users.findOne({ where: { email: userInfo.email } })).id;
+      const { id } = await this.users.findOne({ where: { email: userInfo.email } });
+      sales.userId = id;
       const result = await this.sales.create(sales, { raw: true, transaction: t });
       const saleInfo = result.toJSON();
       const array = products.map((elem) => ({
         saleId: saleInfo.id,
         productId: elem.productId,
-        quantity: elem.quantity,
-      }));
+        quantity: elem.quantity }));
       await this.salesProducts.bulkCreate(array, { transaction: t });
       await t.commit();
       return saleInfo;

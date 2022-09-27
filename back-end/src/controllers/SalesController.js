@@ -11,8 +11,11 @@ class SalesController {
   }
 
   async create(req, res) {
+    console.log(req.body, 1);
+    console.log(req.headers.authorization, 2);
     const token = req.headers.authorization;
     const userInfo = jwt.verify(token);
+    console.log(userInfo, 3);
     const result = await this.service.create(req.body, userInfo);
     res.status(201).json(result);
   }

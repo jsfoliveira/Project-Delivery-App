@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import fetchCardOrder from '../api/fetchCardOrder';
 import { readLocal } from '../helpers/localStorage';
 
 function CardOrder() {
+  const params = useParams();
   const [orders, setOrders] = useState([]);
 
   // adcionar zero à esquerda do número do pedido
@@ -76,8 +77,10 @@ function CardOrder() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     const token = readLocal('user');
-    const response = await fetchCardOrder(token.token, userId);
-    setOrders(response);
+    const { data } = await fetchCardOrder(token.token, params.id);
+    console.log(data, 'HAHAHAHAHHAHAHAH');
+    setOrders(data);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderCardOrders = () => {
