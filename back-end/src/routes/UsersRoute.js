@@ -9,6 +9,8 @@ const userController = new UserController(service);
 
 route.post('/users', userController.create);
 
+route.get('/user/seller', userController.readSeller);
+
 route.get('/user', userController.readAll);
 
 module.exports = route;

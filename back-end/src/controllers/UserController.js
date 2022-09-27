@@ -1,9 +1,11 @@
+const jwt = require('../services/utils/jwt');
+
 class UserController {
   constructor(service) {
     this.service = service;
     this.create = this.create.bind(this);
     this.readAll = this.readAll.bind(this);
-    // this.readOne = this.readOne.bind(this);
+    this.readSeller = this.readSeller.bind(this);
     // this.update = this.update.bind(this);
     // this.delete = this.delete.bind(this);
   }
@@ -18,12 +20,12 @@ class UserController {
     res.status(200).json(result);
   }
 
-  // async readOne(req, res) {
-  //   const token = req.headers.authorization;
-  //   const decoded = jwt.verify(token);
-  //   const result = await this.service.readOne(decoded.email);
-  //   res.status(200).json(result);
-  // }
+  async readSeller(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
+    const result = await this.service.readSeller('seller');
+    res.status(200).json(result);
+  }
 
   // async update(req, res) {
   //   const result = await this.service.update(req.params.id, req.body);

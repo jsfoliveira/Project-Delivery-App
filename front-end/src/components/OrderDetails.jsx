@@ -1,45 +1,91 @@
-import React, { useContext } from 'react';
-import stateGlobalContext from '../context/stateGlobalContext';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import fetchSalesGet from '../api/fetchSalesGet';
+import fetchCardOrder from '../api/fetchCardOrder';
+import { readLocal } from '../helpers/localStorage';
 
 function OrderDetails() {
-  const { purchaseTotal, sumTotal } = useContext(stateGlobalContext);
+  const params = useParams();
+  const [order, setOrder] = useState({});
+  const [seller, setSeller] = useState('');
 
-  const deliveryOK = () => {
-    console.log('GO!');
+  // Pedido
+  // Descrição
+  // SellerName:
+  // OrderDate:
+
+  // converte a data no formato dd/mm/yy.
+  const convertDate = (data) => {
+    const now = new Date(data);
+    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
+    const numberSlice = -2;
+    const day = (`0${now.getDate()}`).slice(numberSlice);
+    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
+    const result = `${day}/${month}/${now.getFullYear()}`;
+    return result;
   };
 
-  const purchasedId = purchaseTotal.id;
-  const purchasedName = purchaseTotal.name;
+  // const sellerName = () => {
+  //   if(listSeller !== undefined)
+  // };
+  const sumTotalOrder = (array) => array.reduce((acc, curr) => {
+    acc += +curr.SalesProducts.quantity * +curr.price;
+    return acc;
+  }, 0);
+
+  const deliveryOK = () => {
+    console.log(order);
+  };
+
+  const totalValue = (quantity, price) => (+quantity * +price).toFixed(2);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    const token = readLocal('user');
+    const getOrders = await fetchCardOrder(token.token);
+    const getSellers = await fetchSalesGet(token.token);
+    if (getOrders && getSellers) {
+      const getOrder = getOrders.data.find((element) => +params.id === +element.id);
+      const getSeller = getSellers.data
+        .find((element) => +getOrder.sellerId === +element.id);
+
+      setOrder(getOrder);
+      setSeller(getSeller.name);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-      <h2>Detalhe do Pedido</h2>
-      <h3
-        data-testid={ `customer_order_details__element-order-table-item-number-${
-          purchasedId
-        }` }
+      <h3>Detalhe do Pedido</h3>
+      <p
+        data-testid="customer_order_details__element-order-details-label-order-id"
       >
         Pedido
         {' '}
-        { purchaseTotal.id }
-      </h3>
-      <h3
-        data-testid={ `customer_order_details__element-order-table-name-${
-          purchasedName
-        }` }
-      >
-        Descrição
-      </h3>
-      <h3 data-testid="customer_order_details__element-order-details-label-seller-name">
+        { order.id }
+      </p>
+      <p data-testid="customer_order_details__element-order-details-label-seller-name">
         SellerName:
-        {}
-      </h3>
-      <h3 data-testid="customer_order_details__element-order-details-label-order-date">
+        {' '}
+        { seller }
+      </p>
+      <p data-testid="customer_order_details__element-order-details-label-order-date">
         OrderDate:
-        {}
-      </h3>
+        {' '}
+        { convertDate(order.saleDate) }
+      </p>
+      <p
+        data-testid="customer_order_details__element-order-details-label-delivery-status"
+      >
+        Status:
+        {' '}
+        { order.status }
+      </p>
       <button
+        data-testid="customer_order_details__button-delivery-check"
         type="button"
+        disabled
         onClick={ deliveryOK }
       >
         MARCAR COMO ENTREGUE
@@ -53,35 +99,38 @@ function OrderDetails() {
             <th>Valor Unitário</th>
             <th>Sub-total</th>
           </tr>
-          { purchaseTotal.map((product, i) => {
+          { order.Products && order.Products.map((product, i) => {
             const item = `customer_order_details__element-order-table-item-number-${i}`;
             const description = `customer_order_details__element-order-table-name-${i}`;
-            const quantity = `customer_order_details__element-order-table-quantity- ${i}`;
+            const quantity = `customer_order_details__element-order-table-quantity-${i}`;
             const uPrice = `customer_order_details__element-order-table-unit-price-${i}`;
-            const subTotal = ((product.price) * (product.counter)).toFixed(2);
             const total = `customer_order_details__element-order-table-sub-total-${i}`;
             return (
               <tr key={ product.id }>
                 <td data-testid={ item }>{ i + 1 }</td>
                 <td data-testid={ description }>{ product.name }</td>
-                <td data-testid={ quantity }>{ product.counter }</td>
+                <td data-testid={ quantity }>{ product.SalesProducts.quantity }</td>
                 <td data-testid={ uPrice }>
                   { `R$ ${product.price.toString().replace('.', ',')}` }
                 </td>
                 <td data-testid={ total }>
-                  { `R$ ${subTotal.toString().replace('.', ',')}` }
+                  { `R$ ${totalValue(product.SalesProducts.quantity, product.price)
+                    .toString().replace('.', ',')}` }
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      <h1
-        data-testid="customer_order_details__element-order-total-price "
-      >
+      <h1>
         Total: R$
         {' '}
-        { `${sumTotal.toString().replace('.', ',')}` }
+        <span
+          data-testid="customer_order_details__element-order-total-price"
+        >
+          { `${order.Products && sumTotalOrder(order.Products)
+            .toFixed(2).toString().replace('.', ',')}` }
+        </span>
       </h1>
     </>
   );

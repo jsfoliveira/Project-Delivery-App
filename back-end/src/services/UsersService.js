@@ -30,9 +30,9 @@ class UserService {
     return result;
   }
 
-  async readOne(email) {
-    const result = await this.users.findOne({
-      where: { email },
+  async readSeller(role) {
+    const result = await this.users.findAll({
+      where: { role },
     });
     return result;
   }
