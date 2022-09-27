@@ -1,9 +1,21 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+
 import stateGlobalContext from '../context/stateGlobalContext';
 
 function Checkout() {
-  const { sumTotal, purchaseTotal } = useContext(stateGlobalContext);
+  const { sumTotal, purchaseTotal, setPurchaseTotal } = useContext(stateGlobalContext);
+  const navigate = useNavigate();
+
+  const removeItem = (id) => {
+    const item = purchaseTotal.filter((product) => +product.id !== +id);
+    setPurchaseTotal(item);
+  };
+  function navigateTo(path) {
+    navigate(path);
+  }
+
   return (
     <>
       <Header />
@@ -37,7 +49,15 @@ function Checkout() {
                 <td data-testid={ dTotal }>
                   { `R$ ${subTotal.toString().replace('.', ',')}` }
                 </td>
-                <td data-testid={ dRemove }><button type="submit">Remover</button></td>
+                <td data-testid={ dRemove }>
+                  <button
+                    type="submit"
+                    onClick={ () => removeItem(product.id) }
+                  >
+                    Remover
+                  </button>
+
+                </td>
               </tr>
             );
           })}
@@ -87,6 +107,7 @@ function Checkout() {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="submit"
+          onClick={ () => navigateTo('/customer/orders/:id') }
         >
           FINALIZAR PEDIDO
         </button>
