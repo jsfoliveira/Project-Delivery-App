@@ -43,7 +43,7 @@ function OrderDetails() {
   useEffect(async () => {
     const token = readLocal('user');
     const cardOrder = await fetchCardOrder(token.token, params.id);
-    const getSeller = await fetchSalesGet();
+    const getSeller = await fetchSalesGet(token.token);
 
     setOrder(cardOrder);
     setListSeller(getSeller);
