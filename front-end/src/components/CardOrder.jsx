@@ -44,7 +44,7 @@ function CardOrder() {
   const card = (object) => {
     const { id, status, saleDate, totalPrice } = object;
     return (
-      <div>
+      <div key={ id }>
         <Link to={ `/customer/orders/${id} ` }>
           <p data-testid={ `${dataTestidID}-${id}` }>
             Pedido:
@@ -78,7 +78,6 @@ function CardOrder() {
   useEffect(async () => {
     const token = readLocal('user');
     const { data } = await fetchCardOrder(token.token, params.id);
-    console.log(data, 'HAHAHAHAHHAHAHAH');
     setOrders(data);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

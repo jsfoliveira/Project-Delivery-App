@@ -16,7 +16,6 @@ class UserService {
         );
       const dataValues = result.toJSON();
       const token = jwt.sign(dataValues);
-      console.log(dataValues);
       const { role } = dataValues;
       return ({ token, name, email, role });
     } catch (error) {

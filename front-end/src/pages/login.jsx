@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import fetchLogin from '../api/fetchLogin';
-import { saveLocal } from '../helpers/localStorage';
+import { readLocal, saveLocal } from '../helpers/localStorage';
 
 function Login() {
   const navigate = useNavigate();
@@ -19,11 +19,6 @@ function Login() {
     const isPasswordValid = password.length >= minSize;
     setButtonDisabled(!(isEmailValid && isPasswordValid));
   };
-
-  useEffect(() => {
-    verifyForm();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email, password]);
 
   const handleInputChange = async (target) => {
     if (target.name === 'email') setEmail(target.value);
@@ -63,6 +58,14 @@ function Login() {
     const { role } = data;
     switchRole(role);
   };
+
+  useEffect(() => {
+    verifyForm();
+
+    const storeUser = readLocal('user');
+    if (storeUser) switchRole(storeUser.role);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, password]);
 
   return (
     <div className="Login">

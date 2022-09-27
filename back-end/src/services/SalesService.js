@@ -27,7 +27,7 @@ class SalesService {
       "userId": 3,
       "sellerId": 2,
       "totalPrice": 30.00,
-      "deliveryAdress": "rua A",
+      "deliveryAddress": "rua A",
       "deliveryNumber": 2
     }
   }

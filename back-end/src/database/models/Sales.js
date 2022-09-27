@@ -31,10 +31,10 @@ const CreateSale = (sequelize) => {
       allowNull: false,
       field: 'total_price',
     },
-    deliveryAdress: {
+    deliveryAddress: {
       type: STRING(100),
       allowNull: false,
-      field: 'delivery_adress',
+      field: 'delivery_address',
     },
     deliveryNumber: {
       type: STRING(50),
