@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import fetchCardOrder from '../api/fetchCardOrder';
 import { readLocal } from '../helpers/localStorage';
 
-function CardOrder() {
+function SellerOrder() {
   const params = useParams();
   const [orders, setOrders] = useState([]);
 
@@ -39,17 +39,18 @@ function CardOrder() {
   };
 
   // datatestId
-  const dataTestidID = 'customer_orders__element-order-id-';
-  const dataTestidStatus = 'customer_orders__element-delivery-status-';
-  const dataTestidDate = 'customer_orders__element-order-date-';
-  const dataTestidPrice = 'customer_orders__element-card-price-';
+  const dataTestidID = 'seller_orders__element-order-id-';
+  const dataTestidStatus = 'seller_orders__element-delivery-status-';
+  const dataTestidDate = 'seller_orders__element-order-date-';
+  const dataTestidPrice = 'seller_orders__element-card-price-';
+  const dataTestidAddress = 'seller_orders__element-card-address-';
 
   // renderizando os cards com id, status, saleDate e totalPrice
   const card = (object) => {
-    const { id, status, saleDate, totalPrice } = object;
+    const { id, status, saleDate, totalPrice, deliveryAddress } = object;
     return (
       <div key={ id }>
-        <Link to={ `/customer/orders/${id} ` }>
+        <Link to={ `/seller/orders/${id} ` }>
           <p data-testid={ `${dataTestidID}-${id}` }>
             Pedido:
             {' '}
@@ -77,6 +78,12 @@ function CardOrder() {
             {' '}
             { convertPrice(totalPrice) }
           </p>
+
+          <p data-testid={ `${dataTestidAddress}-${id}` }>
+            Adress:
+            {' '}
+            { deliveryAddress }
+          </p>
         </Link>
       </div>
     );
@@ -91,7 +98,6 @@ function CardOrder() {
   }, []);
 
   const renderCardOrders = () => {
-    console.log('TESTE');
     if (orders.length !== 0 || orders !== undefined) {
       return (
         orders.map((element) => {
@@ -100,6 +106,7 @@ function CardOrder() {
             status: element.status,
             saleDate: element.saleDate,
             totalPrice: element.totalPrice,
+            deliveryAddress: element.deliveryAddress,
           };
           return card(object);
         })
@@ -114,4 +121,4 @@ function CardOrder() {
   );
 }
 
-export default CardOrder;
+export default SellerOrder;
