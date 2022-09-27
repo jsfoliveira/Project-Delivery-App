@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const config = require('../database/config/config');
-const { Sales, SalesProducts, Products } = require('../database/models');
+const { Sales, SalesProducts, Products, Users } = require('../database/models');
 
 const sequelize = new Sequelize(config.development);
 
@@ -8,6 +8,7 @@ class SalesService {
   constructor() {
     this.sales = Sales;
     this.salesProducts = SalesProducts;
+    this.users = Users;
   }
   
 /*
@@ -32,10 +33,11 @@ class SalesService {
   }
 */
 
-  async create(obj) {
+  async create(obj, userInfo) {
     const t = await sequelize.transaction();
     try {
       const { products, sales } = obj;
+      sales.iserId = (await this.users.findOne({ where: { email: userInfo.email } })).id;
       const result = await this.sales.create(sales, { raw: true, transaction: t });
       const saleInfo = result.toJSON();
       const array = products.map((elem) => ({
