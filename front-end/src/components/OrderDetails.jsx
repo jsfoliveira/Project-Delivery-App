@@ -1,18 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import fetchSalesGet from '../api/fetchSalesGet';
+import fetchCardOrder from '../api/fetchCardOrder';
 import stateGlobalContext from '../context/stateGlobalContext';
+import { readLocal } from '../helpers/localStorage';
 
 function OrderDetails() {
   const { purchaseTotal, sumTotal } = useContext(stateGlobalContext);
+  const params = useParams();
+  const [listSeller, setListSeller] = useState([]);
+  const [order, setOrder] = useState([]);
 
-  const deliveryOK = () => {
-    console.log('GO!');
-  };
-
+  // Pedido
+  // Descrição
+  // SellerName:
+  // OrderDate:
   const purchasedId = purchaseTotal.id;
   const purchasedName = purchaseTotal.name;
 
+  // converte a data no formato dd/mm/yy.
+  const convertDate = (data) => {
+    const now = new Date(data);
+    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
+    const numberSlice = -2;
+    const day = (`0${now.getDate()}`).slice(numberSlice);
+    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
+    const result = `${day}/${month}/${now.getFullYear()}`;
+    return result;
+  };
+
+  // const sellerName = async () => {
+  //   const getSeller = await fetchSalesGet();
+
+  //   return getSeller;
+  // };
+
+  const deliveryOK = () => {
+    console.log(purchaseTotal);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    const token = readLocal('user');
+    const cardOrder = await fetchCardOrder(token.token, params.id);
+    const getSeller = await fetchSalesGet();
+
+    setOrder(cardOrder);
+    setListSeller(getSeller);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
+      { console.log(listSeller) }
       <h2>Detalhe do Pedido</h2>
       <h3
         data-testid={ `customer_order_details__element-order-table-item-number-${
@@ -21,7 +61,7 @@ function OrderDetails() {
       >
         Pedido
         {' '}
-        { purchaseTotal.id }
+        { }
       </h3>
       <h3
         data-testid={ `customer_order_details__element-order-table-name-${
@@ -32,11 +72,11 @@ function OrderDetails() {
       </h3>
       <h3 data-testid="customer_order_details__element-order-details-label-seller-name">
         SellerName:
-        {}
+        { }
       </h3>
       <h3 data-testid="customer_order_details__element-order-details-label-order-date">
         OrderDate:
-        {}
+        { convertDate }
       </h3>
       <button
         type="button"

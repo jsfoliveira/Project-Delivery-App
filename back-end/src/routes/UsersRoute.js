@@ -11,4 +11,6 @@ route.post('/users', userController.create);
 
 route.get('/user', userController.readAll);
 
+route.get('/user/seller', userController.readSeller);
+
 module.exports = route;

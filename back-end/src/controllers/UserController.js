@@ -18,12 +18,12 @@ class UserController {
     res.status(200).json(result);
   }
 
-  // async readOne(req, res) {
-  //   const token = req.headers.authorization;
-  //   const decoded = jwt.verify(token);
-  //   const result = await this.service.readOne(decoded.email);
-  //   res.status(200).json(result);
-  // }
+  async readSeller(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
+    const result = await this.service.readSeller('seller');
+    res.status(200).json(result);
+  }
 
   // async update(req, res) {
   //   const result = await this.service.update(req.params.id, req.body);
