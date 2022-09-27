@@ -1,8 +1,13 @@
 import React from 'react';
+import CardOrder from '../components/CardOrder';
+import Header from '../components/Header';
 
 function Orders() {
   return (
-    <h1>Orders Page</h1>
+    <div>
+      <Header />
+      <CardOrder />
+    </div>
   );
 }
 

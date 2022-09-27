@@ -52,6 +52,7 @@ module.exports = {
       status: {
         type: STRING(50),
         allowNull: false,
+        defaultValue: 'Pendente',
       },
     }, {
       timestamps: false,

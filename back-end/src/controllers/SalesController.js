@@ -1,3 +1,5 @@
+const jwt = require('../services/utils/jwt');
+
 class SalesController {
   constructor(service) {
     this.service = service;
@@ -9,28 +11,41 @@ class SalesController {
   }
 
   async create(req, res) {
-    const result = await this.service.create(req.body);
+    console.log(req.body, 1);
+    console.log(req.headers.authorization, 2);
+    const token = req.headers.authorization;
+    const userInfo = jwt.verify(token);
+    console.log(userInfo, 3);
+    const result = await this.service.create(req.body, userInfo);
     res.status(201).json(result);
   }
 
-  async readAll(_req, res) {
+  async readAll(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
     const result = await this.service.readAll();
     res.status(200).json(result);
   }
 
   async readOne(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
     const result = await this.service.readOne(req.params.id);
     res.status(200).json(result);
   }
 
   async update(req, res) {
+    const token = req.headers.authorization;
+    jwt.verify(token);
     const result = await this.service.update(req.params.id, req.body);
     res.status(200).json(result);
   }
 
   async delete(req, res) {
-    const result = await this.service.delete(req.params.id);
-    res.status(204).json(result);
+    const token = req.headers.authorization;
+    jwt.verify(token);
+    await this.service.delete(req.params.id);
+    res.sendStatus(204);
   }
 }
 

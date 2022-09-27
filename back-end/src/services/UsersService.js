@@ -31,10 +31,12 @@ class UserService {
     return result;
   }
 
-  // async readOne(id) {
-  //   const result = await Users.findByPk(id);
-  //   return result;
-  // }
+  async readOne(email) {
+    const result = await this.users.findOne({
+      where: { email },
+    });
+    return result;
+  }
 
   // async update(id, obj) {
   //   const result = await Users.update(id, obj);

@@ -8,9 +8,6 @@ const route = Router();
 const service = new SalesProductsService();
 const salesProductsController = new SalesProductsController(service);
 
-route.post(ROUTE, (req, res) =>
-  salesProductsController.create(req, res));
-
 route.get(ROUTE, (req, res) =>
   salesProductsController.read(req, res));
 
