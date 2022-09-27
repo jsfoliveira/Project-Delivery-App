@@ -133,6 +133,7 @@ function Checkout() {
         </label>
         <br />
         <button
+          onClick={ print }
           data-testid="customer_checkout__button-submit-order"
           type="submit"
           onClick={ handleClick }
