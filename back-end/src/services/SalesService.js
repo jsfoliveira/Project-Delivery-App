@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const config = require('../database/config/config');
-const { Sales, SalesProducts } = require('../database/models');
+const { Sales, SalesProducts, Products } = require('../database/models');
 
 const sequelize = new Sequelize(config.development);
 
@@ -53,12 +53,20 @@ class SalesService {
   }
 
   async readAll() {
-    const result = await this.sales.findAll();
+    const result = await this.sales.findAll({
+      include: [{ model: Products, as: 'Products' }],
+    });
     return result;
   }
 
   async readOne(id) {
-    const result = await this.sales.findByPk(id);
+    const result = await this.sales.findAll({
+      where: { userId: id },
+      include: [{ model: Products, as: 'Products' }],
+    });
+    // const products = await this.salesProducts.findAll({
+    //   where: { saleId: result.id }
+    // })
     return result;
   }
 
@@ -71,7 +79,6 @@ class SalesService {
   }
 
   async delete(id) {
-    console.log(id);
     await this.sales.destroy({
       where: { id },
     });
