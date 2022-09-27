@@ -29,11 +29,11 @@ function OrderDetails() {
     return result;
   };
 
-  // const sellerName = async () => {
-  //   const getSeller = await fetchSalesGet();
+  const sellerName = async () => {
+    const getSeller = await fetchSalesGet();
 
-  //   return getSeller;
-  // };
+    return getSeller;
+  };
 
   const deliveryOK = () => {
     console.log(purchaseTotal);
@@ -52,7 +52,7 @@ function OrderDetails() {
 
   return (
     <>
-      { console.log(listSeller) }
+      { console.log(listSeller.data) }
       <h2>Detalhe do Pedido</h2>
       <h3
         data-testid={ `customer_order_details__element-order-table-item-number-${
