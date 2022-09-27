@@ -29,14 +29,12 @@ function Checkout() {
     const sales = {
       sellerId: 2,
       totalPrice: sumTotal,
-      deliveryAdress: addressCheckout,
+      deliveryAddress: addressCheckout,
       deliveryNumber: numberAddressCheckout,
     };
     const products = purchaseTotal
       .map((element) => ({ productId: element.id, quantity: element.counter }));
-    console.log(products);
     const token = readLocal('user');
-    console.log(token.token);
     const { data } = await fetchSales(token.token, { sales, products });
     navigateTo(`/customer/orders/${data.userId}`);
   }
@@ -128,7 +126,8 @@ function Checkout() {
             id="numberAddressCheckout"
             name="numberAddressCheckout"
             data-testid="customer_checkout__input-address-number"
-            type="number"
+            type="text"
+            onChange={ ({ target }) => handleInputChange(target) }
           />
         </label>
         <br />
