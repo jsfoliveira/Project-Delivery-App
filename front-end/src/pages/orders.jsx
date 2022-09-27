@@ -2,7 +2,7 @@ import React from 'react';
 
 function Orders() {
   return (
-    <h1>Oders Page</h1>
+    <h1>Orders Page</h1>
   );
 }
 

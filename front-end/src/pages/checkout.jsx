@@ -4,6 +4,11 @@ import stateGlobalContext from '../context/stateGlobalContext';
 
 function Checkout() {
   const { sumTotal, purchaseTotal } = useContext(stateGlobalContext);
+
+  const print = () => {
+    console.log(purchaseTotal);
+  };
+
   return (
     <>
       <Header />
@@ -85,6 +90,7 @@ function Checkout() {
         </label>
         <br />
         <button
+          onClick={ print }
           data-testid="customer_checkout__button-submit-order"
           type="submit"
         >

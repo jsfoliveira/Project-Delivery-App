@@ -5,7 +5,7 @@ function CardOrder() {
   // eslint-disable-next-line no-unused-vars
   const [orders, setOrders] = useState([]);
 
-  // adcionar zero à esquerda do número do pedido
+  // adicionar zero à esquerda do número do pedido
   const addZeros = (num) => {
     let numberWithZeros = String(num);
     let counter = numberWithZeros.length;
