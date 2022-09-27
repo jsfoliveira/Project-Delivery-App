@@ -24,7 +24,11 @@ function CardOrder() {
   // converte a data no formato dd/mm/yy.
   const convertDate = (data) => {
     const now = new Date(data);
-    const result = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
+    const numberSlice = -2;
+    const day = (`0${now.getDate()}`).slice(numberSlice);
+    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
+    const result = `${day}/${month}/${now.getFullYear()}`;
     return result;
   };
 
@@ -58,10 +62,14 @@ function CardOrder() {
             { status }
           </p>
 
-          <p data-testid={ `${dataTestidDate}-${id}` }>
+          <p>
             Data:
             {' '}
-            { convertDate(saleDate) }
+            <span
+              data-testid={ `${dataTestidDate}-${id}` }
+            >
+              { convertDate(saleDate) }
+            </span>
           </p>
 
           <p data-testid={ `${dataTestidPrice}-${id}` }>
