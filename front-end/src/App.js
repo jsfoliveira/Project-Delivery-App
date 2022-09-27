@@ -1,12 +1,13 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Login from './pages/login';
-import Products from './pages/products';
 import Checkout from './pages/checkout';
-import Register from './pages/register';
-import Orders from './pages/orders';
+import Login from './pages/login';
 import Manage from './pages/manage';
 import OrderDetails from './pages/orderDetails';
+import Orders from './pages/orders';
+import Products from './pages/products';
+import Register from './pages/register';
+import Seller from './pages/seller';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/customer/orders/:id" element={ <OrderDetails /> } />
       <Route path="/customer/orders" element={ <Orders /> } />
       <Route path="/admin/manage" element={ <Manage /> } />
+      <Route path="/seller/orders" element={ <Seller /> } />
     </Routes>
   );
 }
