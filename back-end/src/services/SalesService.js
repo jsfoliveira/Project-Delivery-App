@@ -61,7 +61,8 @@ class SalesService {
     return result;
   }
 
-  async readOne(id) {
+  async readOne(userInfo) {
+    const { id } = await this.users.findOne({ where: { email: userInfo.email } });
     const result = await this.sales.findAll({
       where: { userId: id },
       include: [{ model: Products, as: 'Products' }],

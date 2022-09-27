@@ -36,7 +36,7 @@ function Checkout() {
       .map((element) => ({ productId: element.id, quantity: element.counter }));
     const token = readLocal('user');
     const { data } = await fetchSales(token.token, { sales, products });
-    navigateTo(`/customer/orders/${data.userId}`);
+    navigateTo(`/customer/orders/${data.id}`);
   }
 
   return (
@@ -132,7 +132,6 @@ function Checkout() {
         </label>
         <br />
         <button
-          onClick={ print }
           data-testid="customer_checkout__button-submit-order"
           type="submit"
           onClick={ handleClick }

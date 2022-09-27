@@ -26,8 +26,8 @@ class SalesController {
 
   async readOne(req, res) {
     const token = req.headers.authorization;
-    jwt.verify(token);
-    const result = await this.service.readOne(req.params.id);
+    const userInfo = jwt.verify(token);
+    const result = await this.service.readOne(userInfo);
     res.status(200).json(result);
   }
 
