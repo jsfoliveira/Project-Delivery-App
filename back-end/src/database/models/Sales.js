@@ -47,7 +47,11 @@ const CreateSale = (sequelize) => {
       allowNull: false,
       field: 'sale_date',
     },
-    status: STRING,
+    status: {
+      type: STRING(50),
+      allowNull: false,
+      defaultValue: 'Pendente',
+    },
   }, {
     timestamps: false,
     tableName: 'sales',

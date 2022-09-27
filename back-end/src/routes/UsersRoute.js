@@ -10,15 +10,5 @@ const userController = new UserController(service);
 route.post('/users', userController.create);
 
 route.get('/user', userController.readAll);
-// route.get('/userone', userController.readOne);
-
-// // loginroute.get('/cars/:id', (req, res) =>
-// //   userController.readOne(req, res));
-
-// // loginroute.put('/cars/:id', (req, res) =>
-// //   userController.update(req, res));
-
-// // loginroute.delete('/cars/:id', (req, res) =>
-// //   userController.delete(req, res));
 
 module.exports = route;

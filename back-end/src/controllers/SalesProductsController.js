@@ -1,18 +1,12 @@
 class SalesProductController {
     constructor(service) {
       this.service = service;
-      this.create = this.create.bind(this);
       this.readAll = this.readAll.bind(this);
       this.readOne = this.readOne.bind(this);
       this.update = this.update.bind(this);
       this.delete = this.delete.bind(this);  
     }
-  
-    async create(req, res) {
-      const result = await this.service.create(req.body);
-      res.status(201).json(result);
-    }
-  
+    
     async readAll(_req, res) {
       const result = await this.service.readAll();
       res.status(200).json(result);

@@ -1,0 +1,12 @@
+login Zé: 
+{
+  "email": "zebirita@email.com",
+  "password": "$#zebirita#$"
+}
+resposta: 
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQ2xpZW50ZSBaw6kgQmlyaXRhIiwiZW1haWwiOiJ6ZWJpcml0YUBlbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJpYXQiOjE2NjQyMjMyNzB9.bhE4SEDInAc7gOGFMD4Xw6UwRN6xVq7hzWnD-8Zk91M",
+  "name": "Cliente Zé Birita",
+  "email": "zebirita@email.com",
+  "role": "customer"
+}
