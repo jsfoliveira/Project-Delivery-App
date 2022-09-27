@@ -106,7 +106,7 @@ function SellerOrder() {
             status: element.status,
             saleDate: element.saleDate,
             totalPrice: element.totalPrice,
-            deliveryAddress: element.totalPrice,
+            deliveryAddress: element.deliveryAddress,
           };
           return card(object);
         })
