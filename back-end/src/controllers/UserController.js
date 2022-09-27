@@ -1,9 +1,11 @@
+const jwt = require('../services/utils/jwt');
+
 class UserController {
   constructor(service) {
     this.service = service;
     this.create = this.create.bind(this);
     this.readAll = this.readAll.bind(this);
-    // this.readOne = this.readOne.bind(this);
+    this.readSeller = this.readSeller.bind(this);
     // this.update = this.update.bind(this);
     // this.delete = this.delete.bind(this);
   }
