@@ -6,7 +6,7 @@ async function fetchSalesGet(token) {
   });
   try {
     const result = await instance.get(
-      '/user/seller',
+      '/users/seller',
       {
         headers: { Authorization: token },
       },
