@@ -7,10 +7,9 @@ const route = Router();
 const service = new UserService();
 const userController = new UserController(service);
 
-route.post('/users', userController.create);
-
-route.get('/user/seller', userController.readSeller);
-
-route.get('/user', userController.readAll);
+route.post('/', userController.create);
+route.get('/', userController.readAll);
+route.get('/seller', userController.readSeller);
+route.delete('/:id', userController.delete);
 
 module.exports = route;

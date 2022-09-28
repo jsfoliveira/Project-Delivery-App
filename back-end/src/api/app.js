@@ -21,7 +21,7 @@ app.use('/login', loginRoute);
 app.use('/products', productsRoute);
 app.use('/token', tokenRoute);
 app.use('/sales', salesRoute);
-app.use(userRoute);
+app.use('/users', userRoute);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 

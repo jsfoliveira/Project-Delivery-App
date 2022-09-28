@@ -37,15 +37,19 @@ class UserService {
     return result;
   }
 
-  // async update(id, obj) {
-  //   const result = await Users.update(id, obj);
-  //   return result;
-  // }
+  async update(id, obj) {
+    const result = await this.users.update(
+      obj,
+      { where: { id } },
+    );
+    return result;
+  }
 
-  // async delete(id) {
-  //   const result = await Users.delete(id);
-  //   return result;
-  // }
+  async delete(id) {
+    await this.users.destroy({
+      where: { id } },
+    );
+  }
 }
 
 module.exports = UserService;
