@@ -28,6 +28,7 @@ function OrderDetails() {
   // const sellerName = () => {
   //   if(listSeller !== undefined)
   // };
+
   const sumTotalOrder = (array) => array.reduce((acc, curr) => {
     acc += +curr.SalesProducts.quantity * +curr.price;
     return acc;
