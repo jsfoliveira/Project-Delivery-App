@@ -9,8 +9,9 @@ function OrderDetailSeller() {
   const { convertDate } = useContext(stateGlobalContext);
   const params = useParams();
   const [order, setOrder] = useState({});
-  const [status, setStatus] = useState('PENDENTE');
-  const [disabled, setDisabled] = useState(false);
+  const [status, setStatus] = useState('Pendente');
+  const [disabledPrepar, setDisabledPrepar] = useState(false);
+  const [disabledDelivery, setDisabledDelivery] = useState(true);
 
   const sumTotalOrder = (array) => array.reduce((acc, curr) => {
     acc += +curr.SalesProducts.quantity * +curr.price;
@@ -45,12 +46,14 @@ function OrderDetailSeller() {
   }, []);
 
   const prepareDelivery = () => {
-    setStatus('PREPARANDO');
+    setDisabledPrepar(true);
+    setDisabledDelivery(false);
+    setStatus('Preparando');
   };
 
   const outToDelivery = () => {
-    setDisabled(true);
-    setStatus('ENTREGUE');
+    setDisabledDelivery(true);
+    setStatus('Em Trânsito');
   };
 
   return (
@@ -73,20 +76,19 @@ function OrderDetailSeller() {
       <p
         data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
-        Status:
-        {' '}
         { status }
       </p>
       <button
         data-testid="seller_order_details__button-preparing-check"
+        disabled={ disabledPrepar }
         onClick={ prepareDelivery }
         type="button"
-        disabled={ disabled }
       >
         PREPARAR PEDIDO
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
+        disabled={ disabledDelivery }
         onClick={ outToDelivery }
         type="button"
       >
