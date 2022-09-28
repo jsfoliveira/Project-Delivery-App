@@ -1,40 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchSalesGet from '../api/fetchSalesGet';
 import fetchCardOrder from '../api/fetchCardOrder';
 import { readLocal } from '../helpers/localStorage';
+import stateGlobalContext from '../context/stateGlobalContext';
+import fetchSalesUpdateStatus from '../api/fetchSalesUpdateStatus';
 
 function OrderDetails() {
   const params = useParams();
+  const { convertDate, setLoading } = useContext(stateGlobalContext);
   const [order, setOrder] = useState({});
   const [seller, setSeller] = useState('');
+  const [disabled, setDisabled] = useState(true);
 
-  // Pedido
-  // Descrição
-  // SellerName:
-  // OrderDate:
-
-  // converte a data no formato dd/mm/yy.
-  const convertDate = (data) => {
-    const now = new Date(data);
-    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
-    const numberSlice = -2;
-    const day = (`0${now.getDate()}`).slice(numberSlice);
-    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
-    const result = `${day}/${month}/${now.getFullYear()}`;
-    return result;
+  const disabledButton = (status) => {
+    if (status === 'Em Trânsito') {
+      return setDisabled(false);
+    }
+    setDisabled(true);
   };
 
-  // const sellerName = () => {
-  //   if(listSeller !== undefined)
-  // };
   const sumTotalOrder = (array) => array.reduce((acc, curr) => {
     acc += +curr.SalesProducts.quantity * +curr.price;
     return acc;
   }, 0);
 
-  const deliveryOK = () => {
-    console.log(order);
+  const deliveryOK = async () => {
+    setLoading(true);
+    const token = readLocal('user');
+    await fetchSalesUpdateStatus(token.token, params.id, { status: 'Entregue' });
+    setLoading(false);
   };
 
   const totalValue = (quantity, price) => (+quantity * +price).toFixed(2);
@@ -48,10 +43,11 @@ function OrderDetails() {
       const getOrder = getOrders.data.find((element) => +params.id === +element.id);
       const getSeller = getSellers.data
         .find((element) => +getOrder.sellerId === +element.id);
-
+      disabledButton(getOrder.status);
       setOrder(getOrder);
       setSeller(getSeller.name);
     }
+    setLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,7 +81,7 @@ function OrderDetails() {
       <button
         data-testid="customer_order_details__button-delivery-check"
         type="button"
-        disabled
+        disabled={ disabled }
         onClick={ deliveryOK }
       >
         MARCAR COMO ENTREGUE

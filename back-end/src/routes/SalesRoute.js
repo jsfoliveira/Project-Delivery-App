@@ -9,9 +9,9 @@ const salesController = new SalesController(service);
 
 route.post('/', salesController.create);
 
-route.get('/', salesController.readAll);
-
 route.get('/:id', salesController.readOne);
+
+route.get('/', salesController.readAll);
 
 route.put('/:id', salesController.update);
 

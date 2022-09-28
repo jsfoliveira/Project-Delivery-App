@@ -18,7 +18,7 @@ function Header() {
   return (
     <div>
       <Link
-        to="/customer/orders"
+        to="/seller/orders"
         data-testid="customer_products__element-navbar-link-orders"
       >
         PEDIDOS

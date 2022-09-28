@@ -4,6 +4,7 @@ import stateGlobalContext from './stateGlobalContext';
 
 function StateGlobalProvider(props) {
   const [purchaseTotal, setPurchaseTotal] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [sumTotal, setSumTotal] = useState(0);
 
   const { Provider } = stateGlobalContext;
@@ -25,6 +26,17 @@ function StateGlobalProvider(props) {
     return result.toFixed(2);
   };
 
+  // converte a data no formato dd/mm/yy.
+  const convertDate = (data) => {
+    const now = new Date(data);
+    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
+    const numberSlice = -2;
+    const day = (`0${now.getDate()}`).slice(numberSlice);
+    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
+    const result = `${day}/${month}/${now.getFullYear()}`;
+    return result;
+  };
+
   useEffect(() => {
     setSumTotal(calculator());
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,6 +47,9 @@ function StateGlobalProvider(props) {
     setPurchaseTotal,
     addAndRemovePurchaseTotal,
     sumTotal,
+    convertDate,
+    loading,
+    setLoading,
   };
 
   return <Provider value={ value }>{children}</Provider>;
