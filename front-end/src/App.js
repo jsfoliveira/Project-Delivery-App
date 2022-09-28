@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Checkout from './pages/checkout';
 import Login from './pages/login';
 import Manage from './pages/manage';
-import OrderDetails from './pages/orderDetails';
+import OrdersDetails from './pages/ordersDetails';
 import Orders from './pages/orders';
 import Products from './pages/products';
 import Register from './pages/register';
