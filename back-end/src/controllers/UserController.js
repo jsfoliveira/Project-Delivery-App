@@ -36,8 +36,12 @@ class UserController {
 
   async delete(req, res) {
     const token = req.headers.authorization;
-    jwt.verify(token);
-    const result = await this.service.delete(req.params.id);
+    const verify = jwt.verify(token);
+    if (verify.role === 'administrator') {
+      const err = new Error('Unauthorized user!!!');
+      err.name = 'UnauthorizedError';
+    }
+    await this.service.delete(req.params.id);
     res.sendStatus(204);
   }
 }

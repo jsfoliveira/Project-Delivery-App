@@ -12,7 +12,7 @@ class UserService {
     const passwordHash = md5(password);
     try {
       const result = await this.users.create(
-        { name, email, password: passwordHash, role: 'customer' },
+        { name, email, role: obj.role, password: passwordHash },
         );
       const dataValues = result.toJSON();
       const token = jwt.sign(dataValues);
@@ -47,8 +47,7 @@ class UserService {
 
   async delete(id) {
     await this.users.destroy({
-      where: { id } },
-    );
+      where: { id } });
   }
 }
 

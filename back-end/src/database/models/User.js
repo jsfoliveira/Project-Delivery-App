@@ -11,7 +11,11 @@ const CreateUser = (sequelize) => {
     name: STRING,
     email: STRING,
     password: STRING,
-    role: STRING,
+    role: {
+      type: STRING(20),
+      allowNull: false, 
+      defaultValue: 'customer',
+    },
   }, {
     timestamps: false,
     tableName: 'users',
