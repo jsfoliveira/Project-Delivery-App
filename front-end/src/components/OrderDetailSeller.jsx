@@ -1,12 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import fetchCardOrder from '../api/fetchCardOrder';
+import fetchSalesGet from '../api/fetchSalesGet';
+import stateGlobalContext from '../context/stateGlobalContext';
+import { readLocal } from '../helpers/localStorage';
 
 function OrderDetailSeller() {
+  const { convertDate } = useContext(stateGlobalContext);
+  const params = useParams();
+  const [order, setOrder] = useState({});
+  const [status, setStatus] = useState('PENDENTE');
+  const [disabled, setDisabled] = useState(false);
+
+  const sumTotalOrder = (array) => array.reduce((acc, curr) => {
+    acc += +curr.SalesProducts.quantity * +curr.price;
+    return acc;
+  }, 0);
+
+  const totalValue = (quantity, price) => (+quantity * +price).toFixed(2);
+
+  const addZeros = (num) => {
+    let numberWithZeros = String(num);
+    let counter = numberWithZeros.length;
+    const maxSize = 4;
+
+    while (counter < maxSize) {
+      numberWithZeros = `0${numberWithZeros}`;
+      counter += 1;
+    }
+
+    return numberWithZeros;
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    const token = readLocal('user');
+    const getOrders = await fetchCardOrder(token.token);
+    const getSellers = await fetchSalesGet(token.token);
+    if (getOrders && getSellers) {
+      const getOrder = getOrders.data.find((element) => +params.id === +element.id);
+      setOrder(getOrder);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const prepareDelivery = () => {
-    console.log('Preparar pedido');
+    setStatus('PREPARANDO');
   };
 
   const outToDelivery = () => {
-    console.log('Saiu pra entrega');
+    setDisabled(true);
+    setStatus('ENTREGUE');
   };
 
   return (
@@ -15,25 +59,29 @@ function OrderDetailSeller() {
       <p
         data-testid="seller_order_details__element-order-details-label-order-id"
       >
-        Pedido
+        Pedido:
         {' '}
+        { addZeros(order.id) }
       </p>
       <p
         data-testid="seller_order_details__element-order-details-label-order-date"
       >
         Data:
         {' '}
+        { convertDate(order.saleDate) }
       </p>
       <p
         data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
         Status:
         {' '}
+        { status }
       </p>
       <button
         data-testid="seller_order_details__button-preparing-check"
         onClick={ prepareDelivery }
         type="button"
+        disabled={ disabled }
       >
         PREPARAR PEDIDO
       </button>

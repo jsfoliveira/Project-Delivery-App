@@ -1,29 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchSalesGet from '../api/fetchSalesGet';
 import fetchCardOrder from '../api/fetchCardOrder';
 import { readLocal } from '../helpers/localStorage';
+import stateGlobalContext from '../context/stateGlobalContext';
 
 function OrderDetails() {
   const params = useParams();
   const [order, setOrder] = useState({});
   const [seller, setSeller] = useState('');
-
-  // Pedido
-  // Descrição
-  // SellerName:
-  // OrderDate:
-
-  // converte a data no formato dd/mm/yy.
-  const convertDate = (data) => {
-    const now = new Date(data);
-    // https://acervolima.com/como-obter-o-mes-e-a-data-do-javascript-no-formato-de-dois-digitos/
-    const numberSlice = -2;
-    const day = (`0${now.getDate()}`).slice(numberSlice);
-    const month = (`0${now.getMonth() + 1}`).slice(numberSlice);
-    const result = `${day}/${month}/${now.getFullYear()}`;
-    return result;
-  };
+  const { convertDate } = useContext(stateGlobalContext);
 
   // const sellerName = () => {
   //   if(listSeller !== undefined)
