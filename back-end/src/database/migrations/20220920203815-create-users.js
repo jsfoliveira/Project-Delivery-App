@@ -27,6 +27,7 @@ module.exports = {
       role: {
         type: STRING(20),
         allowNull: false, 
+        defaultValue: 'customer',
       },
     }, {
       timestamps: false
