@@ -91,7 +91,6 @@ function CardOrder() {
   }, []);
 
   const renderCardOrders = () => {
-    console.log('TESTE');
     if (orders.length !== 0 || orders !== undefined) {
       return (
         orders.map((element) => {

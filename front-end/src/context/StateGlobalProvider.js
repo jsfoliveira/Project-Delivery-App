@@ -4,6 +4,7 @@ import stateGlobalContext from './stateGlobalContext';
 
 function StateGlobalProvider(props) {
   const [purchaseTotal, setPurchaseTotal] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [sumTotal, setSumTotal] = useState(0);
 
   const { Provider } = stateGlobalContext;
@@ -47,6 +48,8 @@ function StateGlobalProvider(props) {
     addAndRemovePurchaseTotal,
     sumTotal,
     convertDate,
+    loading,
+    setLoading,
   };
 
   return <Provider value={ value }>{children}</Provider>;

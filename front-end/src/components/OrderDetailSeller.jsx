@@ -2,14 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchCardOrder from '../api/fetchCardOrder';
 import fetchSalesGet from '../api/fetchSalesGet';
+import fetchSalesUpdateStatus from '../api/fetchSalesUpdateStatus';
 import stateGlobalContext from '../context/stateGlobalContext';
 import { readLocal } from '../helpers/localStorage';
 
 function OrderDetailSeller() {
-  const { convertDate } = useContext(stateGlobalContext);
+  const { convertDate, setLoading } = useContext(stateGlobalContext);
   const params = useParams();
   const [order, setOrder] = useState({});
-  const [status, setStatus] = useState('Pendente');
+  // const [status, setStatus] = useState('Pendente');
   const [disabledPrepar, setDisabledPrepar] = useState(false);
   const [disabledDelivery, setDisabledDelivery] = useState(true);
 
@@ -33,6 +34,19 @@ function OrderDetailSeller() {
     return numberWithZeros;
   };
 
+  const disabledButtons = (status) => {
+    if (status === 'Preparando') {
+      setDisabledPrepar(true);
+      return setDisabledDelivery(false);
+    }
+    if (status === 'Pendente') {
+      setDisabledPrepar(false);
+      return setDisabledDelivery(true);
+    }
+    setDisabledPrepar(true);
+    setDisabledDelivery(true);
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     const token = readLocal('user');
@@ -40,20 +54,28 @@ function OrderDetailSeller() {
     const getSellers = await fetchSalesGet(token.token);
     if (getOrders && getSellers) {
       const getOrder = getOrders.data.find((element) => +params.id === +element.id);
+      disabledButtons(getOrder.status);
       setOrder(getOrder);
     }
+    setLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const prepareDelivery = () => {
+  const prepareDelivery = async () => {
+    setLoading(true);
     setDisabledPrepar(true);
     setDisabledDelivery(false);
-    setStatus('Preparando');
+    const token = readLocal('user');
+    await fetchSalesUpdateStatus(token.token, params.id, { status: 'Preparando' });
+    setLoading(false);
   };
 
-  const outToDelivery = () => {
+  const outToDelivery = async () => {
+    setLoading(true);
     setDisabledDelivery(true);
-    setStatus('Em Trânsito');
+    const token = readLocal('user');
+    await fetchSalesUpdateStatus(token.token, params.id, { status: 'Em Trânsito' });
+    setLoading(false);
   };
 
   return (
@@ -76,7 +98,7 @@ function OrderDetailSeller() {
       <p
         data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
-        { status }
+        { order.status }
       </p>
       <button
         data-testid="seller_order_details__button-preparing-check"
