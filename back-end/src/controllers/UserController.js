@@ -6,7 +6,7 @@ class UserController {
     this.create = this.create.bind(this);
     this.readAll = this.readAll.bind(this);
     this.readSeller = this.readSeller.bind(this);
-    this.update = this.update.bind(this);
+    // this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
   }
 
@@ -27,12 +27,12 @@ class UserController {
     res.status(200).json(result);
   }
 
-  async update(req, res) {
-    const token = req.headers.authorization;
-    jwt.verify(token);
-    const result = await this.service.update(req.params.id, req.body);
-    res.status(200).json(result);
-  }
+  // async update(req, res) {
+  //   const token = req.headers.authorization;
+  //   jwt.verify(token);
+  //   const result = await this.service.update(req.params.id, req.body);
+  //   res.status(200).json(result);
+  // }
 
   async delete(req, res) {
     const token = req.headers.authorization;

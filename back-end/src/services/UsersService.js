@@ -14,7 +14,7 @@ class UserService {
       const result = await this.users.create(
         { name, email, role: obj.role, password: passwordHash },
         );
-      const dataValues = result.toJSON();
+      const { dataValues } = result;
       const token = jwt.sign(dataValues);
       const { role } = dataValues;
       return ({ token, name, email, role });
@@ -37,17 +37,16 @@ class UserService {
     return result;
   }
 
-  async update(id, obj) {
-    const result = await this.users.update(
-      obj,
-      { where: { id } },
-    );
-    return result;
-  }
+  // async update(id, obj) {
+  //   const result = await this.users.update(
+  //     obj,
+  //     { where: { id } },
+  //   );
+  //   return result;
+  // }
 
   async delete(id) {
-    await this.users.destroy({
-      where: { id } });
+    await this.users.destroy({ where: { id } });
   }
 }
 
