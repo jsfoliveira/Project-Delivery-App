@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import fetchLogin from '../api/fetchLogin';
 import { readLocal, saveLocal } from '../helpers/localStorage';
 
 function Login() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(true);
@@ -94,17 +94,19 @@ function Login() {
           />
         </label>
         <button
-          disabled={ isButtonDisabled }
-          onClick={ (e) => handleClick(e) }
-          type="submit"
           className="login-btn"
           data-testid="common_login__button-login"
+          disabled={ isButtonDisabled }
+          name="Login"
+          onClick={ (e) => handleClick(e) }
+          type="submit"
         >
           Login
         </button>
         <button
           className="registre-se"
           data-testid="common_login__button-register"
+          name="Cadastra-se"
           onClick={ () => navigateTo('/register') }
           type="submit"
         >
