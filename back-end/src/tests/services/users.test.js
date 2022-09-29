@@ -8,14 +8,21 @@ const {
   mockQuery,
   mockCreateService,
   mockListSeller,
+  mockCreateAdm,
+  mockGoodUser2,
+  mockCreateService2,
+  mockCreateError,
 } = require('../mocks/UserService');
 
 describe('Testes do User', () => {
   const userService = new UserService();
 
   before(async () => {
-    sinon.stub(Users,'create').resolves(mockQuery);
-    sinon.stub(Users,'destroy').resolves(1);
+    sinon.stub(Users,'create').onCall(0).resolves(mockQuery)
+      .onCall(1).resolves(mockCreateAdm)
+      .onCall(2).throws()
+      .onCall(3).throws();
+    sinon.stub(Users,'destroy').resolves();
     sinon.stub(Users,'findAll').onCall(0).resolves(mockListAll)
       .onCall(1).resolves(mockListSeller);
   })
@@ -32,6 +39,15 @@ describe('Testes do User', () => {
         expect(user.email).to.be.deep.equal(mockCreateService.email);
         expect(user.role).to.be.deep.equal(mockCreateService.role);
         expect(user.token.split('.')[0]).to.be.deep.equal(mockCreateService.token);
+      });
+    })
+    describe('Dados validos permite o administrador criar um usuário', () => {
+      it('Com sucesso', async () => {
+        const user = await userService.createAdm(mockGoodUser2);
+        expect(user.name).to.be.deep.equal(mockCreateService2.name);
+        expect(user.email).to.be.deep.equal(mockCreateService2.email);
+        expect(user.role).to.be.deep.equal(mockCreateService2.role);
+        expect(user.token.split('.')[0]).to.be.deep.equal(mockCreateService2.token);
       });
     })
     describe('Permite listar todos os usuários', () => {
@@ -52,5 +68,19 @@ describe('Testes do User', () => {
     //     expect(deleted).to.not.include(mockDeleteList);
     //   });
     // })
+
+    // ESSES TESTES AINDA NÃO PASSAM
+    describe('Criar um usuário repetido', () => {
+      it('Sem sucesso', async () => {
+        const sellers = await userService.create(mockCreateError);
+        expect(sellers).to.throw(Error, "Existing user!");
+      });
+    })
+    describe('Criar um usuário repetido', () => {
+      it('Sem sucesso', async () => {
+        const sellers = await userService.createAdm(mockCreateError);
+        expect(sellers).to.throw(Error, "Existing user!");
+      });
+    })
   })
 })

@@ -55,14 +55,6 @@ class UserService {
     return result;
   }
 
-  // async update(id, obj) {
-  //   const result = await this.users.update(
-  //     obj,
-  //     { where: { id } },
-  //   );
-  //   return result;
-  // }
-
   async delete(id) {
     await this.users.destroy({ where: { id } });
   }
