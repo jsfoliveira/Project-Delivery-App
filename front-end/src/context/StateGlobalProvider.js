@@ -5,6 +5,8 @@ import stateGlobalContext from './stateGlobalContext';
 function StateGlobalProvider(props) {
   const [purchaseTotal, setPurchaseTotal] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [existingUser, setExistingUser] = useState(false);
+  const [messageError, setMessageError] = useState('');
   const [sumTotal, setSumTotal] = useState(0);
 
   const { Provider } = stateGlobalContext;
@@ -50,6 +52,10 @@ function StateGlobalProvider(props) {
     convertDate,
     loading,
     setLoading,
+    existingUser,
+    setExistingUser,
+    messageError,
+    setMessageError,
   };
 
   return <Provider value={ value }>{children}</Provider>;

@@ -4,6 +4,7 @@ class UserController {
   constructor(service) {
     this.service = service;
     this.create = this.create.bind(this);
+    this.createAdm = this.createAdm.bind(this);
     this.readAll = this.readAll.bind(this);
     this.readSeller = this.readSeller.bind(this);
     // this.update = this.update.bind(this);
@@ -12,6 +13,17 @@ class UserController {
 
   async create(req, res) {
     const result = await this.service.create(req.body);
+    res.status(201).json(result);
+  }
+
+  async createAdm(req, res) {
+    const token = req.headers.authorization;
+    const verify = jwt.verify(token);
+    if (verify.role === 'administrator') {
+      const err = new Error('Unauthorized user!!!');
+      err.name = 'UnauthorizedError';
+    }
+    const result = await this.service.createAdm(req.body);
     res.status(201).json(result);
   }
 

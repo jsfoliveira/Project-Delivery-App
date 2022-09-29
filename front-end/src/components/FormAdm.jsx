@@ -1,9 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import fetchCreateUser from '../api/fetchCreateUser';
+import fetchCreateUserAdm from '../api/fetchCreateUserAdm';
 import stateGlobalContext from '../context/stateGlobalContext';
+import { readLocal } from '../helpers/localStorage';
 
 function Form() {
-  const { setLoading } = useContext(stateGlobalContext);
+  const {
+    setLoading,
+    existingUser,
+    setExistingUser,
+    messageError,
+    setMessageError,
+  } = useContext(stateGlobalContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,10 +26,18 @@ function Form() {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    const token = readLocal('user');
     setLoading(true);
-    await fetchCreateUser({ name, email, password, role });
-
+    const result = await fetchCreateUserAdm(token.token, { name, email, password, role });
+    const STATUS_NUMBER = 409;
     setLoading(false);
+    if (result.status === STATUS_NUMBER) {
+      setExistingUser(true);
+      console.log(result.data.message);
+      setMessageError(result.data.message);
+      return;
+    }
+    setExistingUser(false);
   };
   const verifyForm = () => {
     const emailFormat = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z.]*\w$/;
@@ -34,6 +49,7 @@ function Form() {
     const isRoleValid = role !== '';
     setisButtonDisabled(!(isEmailValid && isPasswordValid && isNameValid && isRoleValid));
   };
+
   useEffect(() => {
     verifyForm();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +80,7 @@ function Form() {
         </label>
         <label htmlFor="password">
           <input
-            type="text"
+            type="password"
             name="password"
             // value={ password }
             data-testid="admin_manage__input-password"
@@ -93,6 +109,12 @@ function Form() {
           CADASTRAR
         </button>
       </form>
+      { existingUser
+        && (
+          <span data-testid="admin_manage__element-invalid-register">
+            { messageError }
+          </span>
+        )}
     </div>
   );
 }

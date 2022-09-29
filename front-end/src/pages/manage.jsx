@@ -34,14 +34,21 @@ function Manage() {
     const user = readLocal('user');
     switchRole(user.role);
     setLoading(false);
+    console.log('AQUI');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
       <Header />
-      { loading || <Form /> }
-      { loading || <Table /> }
+      {
+        loading || (
+          <>
+            <Form />
+            <Table />
+          </>
+        )
+      }
     </div>
   );
 }
