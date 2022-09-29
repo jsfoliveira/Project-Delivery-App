@@ -39,13 +39,6 @@ class UserController {
     res.status(200).json(result);
   }
 
-  // async update(req, res) {
-  //   const token = req.headers.authorization;
-  //   jwt.verify(token);
-  //   const result = await this.service.update(req.params.id, req.body);
-  //   res.status(200).json(result);
-  // }
-
   async delete(req, res) {
     const token = req.headers.authorization;
     const verify = jwt.verify(token);

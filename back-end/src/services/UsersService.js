@@ -56,7 +56,12 @@ class UserService {
   }
 
   async delete(id) {
-    await this.users.destroy({ where: { id } });
+    const result = await this.users.destroy({ where: { id } });
+    if (result === 0) {
+      const err =  new Error('User not found');
+      err.name = 'NotFoundError';
+      throw err;
+    }
   }
 }
 

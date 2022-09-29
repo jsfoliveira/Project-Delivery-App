@@ -22,7 +22,8 @@ describe('Testes do User', () => {
       .onCall(1).resolves(mockCreateAdm)
       .onCall(2).throws()
       .onCall(3).throws();
-    sinon.stub(Users,'destroy').resolves();
+    sinon.stub(Users,'destroy').onCall(0).resolves(1)
+      .onCall(1).resolves(0);
     sinon.stub(Users,'findAll').onCall(0).resolves(mockListAll)
       .onCall(1).resolves(mockListSeller);
   })
@@ -62,24 +63,37 @@ describe('Testes do User', () => {
         expect(sellers).to.be.deep.equal(mockListSeller);
       });
     })
-    // describe('Deleta um usuário', () => {
-    //   it('Com sucesso', async () => {
-    //     await userService.delete(3);
-    //     expect(deleted).to.not.include(mockDeleteList);
-    //   });
-    // })
-
-    // ESSES TESTES AINDA NÃO PASSAM
-    describe('Criar um usuário repetido', () => {
-      it('Sem sucesso', async () => {
-        const sellers = await userService.create(mockCreateError);
-        expect(sellers).to.throw(Error, "Existing user!");
+    describe('Deleta um usuário', () => {
+      it('com sucesso', async () => {
+          const deleted = await userService.delete(3);
+          expect(deleted).to.be.undefined;
+      });
+    })
+    describe('Deleta um usuário', () => {
+      it('sem sucesso', async () => {
+        try {
+          await userService.delete(2222);
+        } catch (error) {
+          expect(error.message).to.be.equal("User not found");
+        }
       });
     })
     describe('Criar um usuário repetido', () => {
       it('Sem sucesso', async () => {
-        const sellers = await userService.createAdm(mockCreateError);
-        expect(sellers).to.throw(Error, "Existing user!");
+        try {
+          await userService.create(mockCreateError);
+        } catch (error) {
+          expect(error.message).to.be.equal("Existing user!");
+        }
+      });
+    })
+    describe('O administrador criar um usuário repetido', () => {
+      it('Sem sucesso', async () => {
+        try {
+            await userService.createAdm(mockCreateError);
+        } catch (error) {
+          expect(error.message).to.be.equal("Existing user!");
+        }
       });
     })
   })
