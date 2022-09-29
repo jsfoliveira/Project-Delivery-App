@@ -5,7 +5,7 @@ class SalesController {
     this.service = service;
     this.create = this.create.bind(this);
     this.readAll = this.readAll.bind(this);
-    this.readOne = this.readOne.bind(this);
+    // this.readOne = this.readOne.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
   }
@@ -24,12 +24,12 @@ class SalesController {
     res.status(200).json(result);
   }
 
-  async readOne(req, res) {
-    const token = req.headers.authorization;
-    const userInfo = jwt.verify(token);
-    const result = await this.service.readOne(userInfo);
-    res.status(200).json(result);
-  }
+  // async readOne(req, res) {
+  //   const token = req.headers.authorization;
+  //   const userInfo = jwt.verify(token);
+  //   const result = await this.service.readOne(userInfo);
+  //   res.status(200).json(result);
+  // }
 
   async update(req, res) {
     const token = req.headers.authorization;

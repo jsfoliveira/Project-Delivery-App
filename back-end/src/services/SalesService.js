@@ -40,14 +40,14 @@ class SalesService {
       const { id } = await this.users.findOne({ where: { email: userInfo.email } });
       sales.userId = id;
       const result = await this.sales.create(sales, { raw: true, transaction: t });
-      const saleInfo = result.toJSON();
+      const { dataValues } = result;
       const array = products.map((elem) => ({
-        saleId: saleInfo.id,
+        saleId: dataValues.id,
         productId: elem.productId,
         quantity: elem.quantity }));
       await this.salesProducts.bulkCreate(array, { transaction: t });
       await t.commit();
-      return saleInfo;
+      return dataValues;
     } catch (error) {
       await t.rollback();
       throw error;
@@ -61,17 +61,17 @@ class SalesService {
     return result;
   }
 
-  async readOne(userInfo) {
-    const { id } = await this.users.findOne({ where: { email: userInfo.email } });
-    const result = await this.sales.findAll({
-      where: { userId: id },
-      include: [{ model: Products, as: 'Products' }],
-    });
-    // const products = await this.salesProducts.findAll({
-    //   where: { saleId: result.id }
-    // })
-    return result;
-  }
+  // async readOne(userInfo) {
+  //   const { id } = await this.users.findOne({ where: { email: userInfo.email } });
+  //   const result = await this.sales.findAll({
+  //     where: { userId: id },
+  //     include: [{ model: Products, as: 'Products' }],
+  //   });
+  //   // const products = await this.salesProducts.findAll({
+  //   //   where: { saleId: result.id }
+  //   // })
+  //   return result;
+  // }
 
   async update(id, obj) {
     const result = await this.sales.update(
