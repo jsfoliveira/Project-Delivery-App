@@ -25,10 +25,34 @@ describe(
       expect(button).toBeInTheDocument();
     });
 
+    test('Verifica se a página possui um botão com a palavra Login', () => {
+      setup();
+      const button = screen.getByRole('button', { name: 'Login' });
+      expect(button).toHaveAttribute('disabled');
+    });
+
     test('Verifica se a página possui um botão com a palavra Cadastra-se', () => {
       setup();
       const button = screen.getByRole('button', { name: 'Cadastra-se' });
       expect(button).toBeInTheDocument();
+    });
+
+    test('Verifica se a página possui apenas 2 botões', () => {
+      setup();
+      const button = screen.getAllByRole('button');
+      expect(button).toHaveLength(2);
+    });
+
+    test('Verifica se a página possui a label Login', () => {
+      setup();
+      const label = screen.getByLabelText('Login');
+      expect(label).toBeInTheDocument();
+    });
+
+    test('Verifica se a página possui a label Password', () => {
+      setup();
+      const label = screen.getByLabelText('Password');
+      expect(label).toBeInTheDocument();
     });
   },
 );
