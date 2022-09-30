@@ -6,6 +6,6 @@ module.exports = {
     'src/database/migrations',
     'src/database/seeders',
     'src/routes',
-    'src/api'
+    'src/api',
   ],
 };
