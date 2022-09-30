@@ -26,9 +26,6 @@ describe('Sales Service', () => {
     it('Retorna o array de sales', async() => {
       const result = await salesService.create(saleMock, userCustomerLocalStorage);
       expect(result).to.be.equal(responseCreateSaleMocke.dataValues);
-      expect(Sales.findAll.calledWith({
-        
-      }))
     });
   })
 
