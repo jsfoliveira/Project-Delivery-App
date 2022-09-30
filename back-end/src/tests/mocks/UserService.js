@@ -98,6 +98,12 @@ const mockCreateService2 = {
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 }
 
+const mockTokenDecoded = {
+  email: "dan@gmail.com",
+  name: "Danillo Santos",
+  role: "seller",
+}
+
 const mockCreateError = {
   email: "dan@gmail.com",
   name: "Dan Santos",
@@ -115,5 +121,6 @@ module.exports = {
   mockDeleteList,
   mockDeleteUser,
   mockCreateAdm,
-  mockCreateService2
+  mockCreateService2,
+  mockTokenDecoded,
 }
