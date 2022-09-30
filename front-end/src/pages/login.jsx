@@ -94,17 +94,19 @@ function Login() {
           />
         </label>
         <button
-          disabled={ isButtonDisabled }
-          onClick={ (e) => handleClick(e) }
-          type="submit"
           className="login-btn"
           data-testid="common_login__button-login"
+          disabled={ isButtonDisabled }
+          name="Login"
+          onClick={ (e) => handleClick(e) }
+          type="submit"
         >
           Login
         </button>
         <button
           className="registre-se"
           data-testid="common_login__button-register"
+          name="Cadastra-se"
           onClick={ () => navigateTo('/register') }
           type="submit"
         >
