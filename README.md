@@ -19,7 +19,7 @@ Precisa ter na máquina o mongodb.
 ### Testes
 O teste acontece de cada desafio, através do comando $npm test.
 ### Autores
-Esse foi um projeto em grupo, composta por mim, Juliana, Sheila, Danillo, Hanna e Gustavo.
+Esse foi um projeto em grupo, composta por mim, Sheila, Danillo, Hanna e Gustavo.
 ### Ferramentas usadas
 Foi usado Visual Studio Code, além do Trello que auxiliou na organização das tarefas.
 ### Framework usado
