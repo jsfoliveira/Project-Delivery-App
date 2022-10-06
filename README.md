@@ -1,4 +1,4 @@
-# 	:woman_technologist: Project Car Shop
+# 	:woman_technologist: Project Delivery App
 
 Esse projeto contém uma série de informações sobre o que eu aprendi aqui na Trybe ao longo  do curso de desenvolvimento web da Trybe. <br>
  Esse é um projeto consiste em criar e integrar tanto o back-end quanto o front-end, criando uma plataforma de delivery de cerveja. 🍻
